@@ -9,6 +9,12 @@ dependencies = [
   "pgvector",
   "redis",
   "sentence-transformers",
+  # torch wheels for Intel macs lag behind numpy 2.x; pin until torch catches up.
+  "numpy<2",
+  # ... and scipy must match numpy 1.x for the same reason.
+  "scipy<1.14",
+  # transformers v5 needs a newer torch than Intel-mac wheels provide.
+  "transformers<5",
 ]
 
 [project.optional-dependencies]

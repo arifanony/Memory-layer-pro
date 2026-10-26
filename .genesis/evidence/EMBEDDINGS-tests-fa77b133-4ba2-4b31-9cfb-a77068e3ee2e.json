@@ -1,0 +1,30 @@
+{
+  "task": "EMBEDDINGS",
+  "gate": "tests",
+  "kind": "command",
+  "attempt": "fa77b133-4ba2-4b31-9cfb-a77068e3ee2e",
+  "command": ".venv/bin/python -m pytest tests/test_embeddings.py -q",
+  "started_at": "2026-10-26T14:27:54.028Z",
+  "observed_at": "2026-10-26T14:29:29.691Z",
+  "exit_code": 0,
+  "signal": null,
+  "stdout": ".....                                                                    [100%]\n=============================== warnings summary ===============================\ntests/test_embeddings.py::test_width_matches_pgvector_contract\n  /Users/arif/Projects/Memory layer/embeddings.py:42: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.\n    dim = model.get_sentence_embedding_dimension()\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n5 passed, 1 warning in 93.81s (0:01:33)\n",
+  "stderr": "",
+  "failure": null,
+  "receipt": null,
+  "revision": {
+    "commit": "6825971cf99c58bdcc624bf3be50e8481871199e",
+    "dirty": true
+  },
+  "source_hash": "282399f2cc7c2184929a158771b387b4e9970c8851a1530e1317932a62f2c606",
+  "before_hash": "282399f2cc7c2184929a158771b387b4e9970c8851a1530e1317932a62f2c606",
+  "config_hash": "bc8ed73249ed37f6aa91bc003b2a5387ec45888e46b670c9d41eaab973d1503a",
+  "environment": {
+    "node": "v22.23.3",
+    "platform": "darwin",
+    "arch": "x64",
+    "verifier": "cbdddbf25e5ed5f3406b93881ae54f64d11a8c54f0bfe177d19d9d9946a6a971",
+    "variables": {}
+  },
+  "hash": "a35b44544f7771ff09eac91520369f953fb073023d04193acdef5f34ae2c58e1"
+}

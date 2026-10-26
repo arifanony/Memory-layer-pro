@@ -26,7 +26,7 @@
 
 ### EMBEDDINGS — Local embedding model with identical preprocessing on query and memory paths
 
-- state/risk: paused / low
+- state/risk: done / low
 - requirements: FR-4, NFR-2, AC-4
 - scope: not bounded
 - gates: tests: .venv/bin/python -m pytest tests/test_embeddings.py -q
@@ -34,7 +34,7 @@
 
 ### MEMSTORE — PostgreSQL pgvector store: user-scoped CRUD, vector retrieval, migration docs
 
-- state/risk: active / medium
+- state/risk: paused / medium
 - requirements: FR-5, FR-7, NFR-3, AC-2, AC-5
 - scope: not bounded
 - gates: tests: .venv/bin/python -m pytest tests/test_memory_store.py -q, independent-review: pending
@@ -42,7 +42,7 @@
 
 ### WORKMEM — Redis working memory: bounded history, TTL, clear-session, never durable
 
-- state/risk: queued / low
+- state/risk: active / low
 - requirements: FR-1, FR-3, FR-8, AC-2, AC-9
 - scope: not bounded
 - gates: tests: .venv/bin/python -m pytest tests/test_working_memory.py -q

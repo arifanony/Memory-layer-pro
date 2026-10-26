@@ -9,7 +9,7 @@
     "non_goals": [],
     "trust_boundary": "local repository",
     "created_at": "2026-10-26T13:10:15.710Z",
-    "updated_at": "2026-10-26T14:09:26.353Z"
+    "updated_at": "2026-10-26T14:29:30.471Z"
   },
   "policy": {
     "ponytail": "full",
@@ -25,7 +25,7 @@
   "lifecycle": {
     "phase": "build",
     "status": "active",
-    "active_task": "MEMSTORE",
+    "active_task": "WORKMEM",
     "blocker": null,
     "next_action": "Run the task pre-flight."
   },
@@ -1989,7 +1989,7 @@
     {
       "id": "EMBEDDINGS",
       "outcome": "Local embedding model with identical preprocessing on query and memory paths",
-      "state": "paused",
+      "state": "done",
       "risk": "low",
       "owner": null,
       "scope": [],
@@ -2008,8 +2008,14 @@
           "kind": "command",
           "command": ".venv/bin/python -m pytest tests/test_embeddings.py -q",
           "mandatory": true,
-          "status": "pending",
-          "evidence": null
+          "status": "pass",
+          "evidence": {
+            "path": ".genesis/evidence/EMBEDDINGS-tests-fa77b133-4ba2-4b31-9cfb-a77068e3ee2e.json",
+            "hash": "a35b44544f7771ff09eac91520369f953fb073023d04193acdef5f34ae2c58e1",
+            "source_hash": "282399f2cc7c2184929a158771b387b4e9970c8851a1530e1317932a62f2c606",
+            "config_hash": "bc8ed73249ed37f6aa91bc003b2a5387ec45888e46b670c9d41eaab973d1503a",
+            "observed_at": "2026-10-26T14:29:29.691Z"
+          }
         }
       ],
       "next_action": "Run the task pre-flight.",
@@ -2018,7 +2024,7 @@
       "failures": [],
       "limitations": [],
       "created_at": "2026-10-26T13:16:17.168Z",
-      "updated_at": "2026-10-26T13:16:17.169Z",
+      "updated_at": "2026-10-26T14:29:30.432Z",
       "base_manifest": {
         ".env.example": "b6a0459f0805215d9ae637a21122d82bdc7137005eb8fb947efbc59625a83881",
         ".gitignore": "94fab4fbcc81cd90750acddb27906d20982097b16672adf23e9a7eed8ad0b616",
@@ -2040,7 +2046,7 @@
     {
       "id": "MEMSTORE",
       "outcome": "PostgreSQL pgvector store: user-scoped CRUD, vector retrieval, migration docs",
-      "state": "active",
+      "state": "paused",
       "risk": "medium",
       "owner": null,
       "scope": [],
@@ -2101,7 +2107,7 @@
     {
       "id": "WORKMEM",
       "outcome": "Redis working memory: bounded history, TTL, clear-session, never durable",
-      "state": "queued",
+      "state": "active",
       "risk": "low",
       "owner": null,
       "scope": [],
@@ -2132,7 +2138,27 @@
       "failures": [],
       "limitations": [],
       "created_at": "2026-10-26T13:16:18.593Z",
-      "updated_at": "2026-10-26T13:16:18.594Z"
+      "updated_at": "2026-10-26T13:16:18.594Z",
+      "base_manifest": {
+        ".env.example": "b6a0459f0805215d9ae637a21122d82bdc7137005eb8fb947efbc59625a83881",
+        ".gitignore": "94fab4fbcc81cd90750acddb27906d20982097b16672adf23e9a7eed8ad0b616",
+        ".python-version": "c873c269ee166fdf5e4fad805eab6a11cb0e1bb571c4587f38a564539b3a6d7b",
+        "ADR.md": "c98bf999a8ffdf03429845473d2ba2bff7eda7004078961d24ef92d2104edd24",
+        "PIPELINE.md": "9b1b076c6c6b3a49ae4bc24c136fe8b3d310fdb3c63f97f21fbb56a04c7050a1",
+        "README.md": "0f851aa1c9263cb46f6f22c1fa7a50e0ffaa1077debccd2e3483a45610b4592c",
+        "SPEC.md": "42d3735ad61ce5319ced97a7416f4ec44522c2ea18afc164456e3ece076388be",
+        "app.py": "21110e345c35d555c38fa5457924b9c62c2ddae834e314e3295c01c862647df3",
+        "config.py": "e11804b54707df3343535ab9e73bec1e4dca67db013c637d20167b0c4c7ea63c",
+        "embeddings.py": "8591eb48aa1f66262f9deaa9cb3afebd75dd86eaa538759686214cc2c2cc50dd",
+        "orchestrator.py": "6c76db8f11fc7330f691d4d501c677c135bf7c82a896682d83b2732014c3a5ac",
+        "privacy.py": "e6051aa0a9d920a7d047e4bea9add33ca078461f58c9f7f7781e1d76e537ccb0",
+        "pyproject.toml": "d96054b323c5efc58c6e39aa5cf76f7918fb9386d709a897abb3ebb422cc7f64",
+        "schemas.py": "d45094d4c45d1721e671707d478756bd800290e855a369aad904f954cded67cf",
+        "tests/conftest.py": "9714deeea6991c8c43c4782096915679e6a0c81ec961c84339abd13d5b916163",
+        "tests/test_config.py": "62442d3b6c94f6a0cfa72061efaeaa0659711893788dfa3cea1ec29b1d9a2ff9",
+        "tests/test_embeddings.py": "9bdbeeca7bbbf26352e167788118812bdc4fa4dd7fb010fe6720991bc01c9b3c",
+        "tests/test_privacy.py": "922680cd902b6e3dba6170c32c3240645b4a9da4798f79bf4f3cde4b91001fbe"
+      }
     },
     {
       "id": "LLMCLIENT",
@@ -2353,6 +2379,24 @@
       "human": "arif",
       "reason": "Human reviewed privacy.py and 8 tests; 13/13 green; approved in session",
       "revision": null
+    },
+    {
+      "id": "9b795410-efe6-4653-975b-75ab98cf3909",
+      "at": "2026-10-26T14:13:05.812Z",
+      "action": "pause",
+      "task": "MEMSTORE",
+      "human": null,
+      "reason": null,
+      "revision": null
+    },
+    {
+      "id": "76617d07-2e32-48a5-a69a-5c5e6e807d0f",
+      "at": "2026-10-26T14:13:06.351Z",
+      "action": "resume",
+      "task": "EMBEDDINGS",
+      "human": null,
+      "reason": null,
+      "revision": null
     }
   ],
   "attempts": [
@@ -2427,6 +2471,30 @@
       "cost": null,
       "stop_reason": null,
       "ended_at": "2026-10-26T14:08:57.664Z"
+    },
+    {
+      "id": "fa77b133-4ba2-4b31-9cfb-a77068e3ee2e",
+      "task": "EMBEDDINGS",
+      "kind": "gate",
+      "command": ".venv/bin/python -m pytest tests/test_embeddings.py -q",
+      "timeout": 120000,
+      "authorization": null,
+      "pid": 31599,
+      "child_pid": 31635,
+      "started_at": "2026-10-26T14:27:54.028Z",
+      "status": "passed",
+      "before_hash": "282399f2cc7c2184929a158771b387b4e9970c8851a1530e1317932a62f2c606",
+      "config_hash": "bc8ed73249ed37f6aa91bc003b2a5387ec45888e46b670c9d41eaab973d1503a",
+      "environment": {
+        "node": "v22.23.3",
+        "platform": "darwin",
+        "arch": "x64",
+        "verifier": "cbdddbf25e5ed5f3406b93881ae54f64d11a8c54f0bfe177d19d9d9946a6a971",
+        "variables": {}
+      },
+      "cost": null,
+      "stop_reason": null,
+      "ended_at": "2026-10-26T14:29:29.691Z"
     }
   ],
   "authorizations": [],
