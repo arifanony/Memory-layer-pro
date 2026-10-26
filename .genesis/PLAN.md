@@ -4,7 +4,7 @@
 
 - workflow: new-product
 - phase: build
-- plan approval: arif at 2026-10-26T14:08:34.360Z
+- plan approval: arif at 2026-10-26T15:06:38.302Z
 
 ## Tasks
 
@@ -35,14 +35,14 @@
 ### MEMSTORE — PostgreSQL pgvector store: user-scoped CRUD, vector retrieval, migration docs
 
 - state/risk: paused / medium
-- requirements: FR-5, FR-7, NFR-3, AC-2, AC-5
+- requirements: AC-2, AC-5, AC-12, FR-5, FR-7, FR-13, NFR-3
 - scope: not bounded
 - gates: tests: .venv/bin/python -m pytest tests/test_memory_store.py -q, independent-review: pending
 - next: Run the task pre-flight.
 
 ### WORKMEM — Redis working memory: bounded history, TTL, clear-session, never durable
 
-- state/risk: active / low
+- state/risk: paused / low
 - requirements: FR-1, FR-3, FR-8, AC-2, AC-9
 - scope: not bounded
 - gates: tests: .venv/bin/python -m pytest tests/test_working_memory.py -q
@@ -50,16 +50,16 @@
 
 ### LLMCLIENT — One-call Nemotron client with strict structured response parsing
 
-- state/risk: queued / medium
+- state/risk: done / medium
 - requirements: FR-6, NFR-1, AC-3
 - scope: not bounded
-- gates: tests: .venv/bin/python -m pytest tests/test_llm_client.py -q, independent-review: pending
+- gates: tests: .venv/bin/python -m pytest tests/test_llm_client.py -q, independent-review: pass
 - next: Run the task pre-flight.
 
 ### ORCHESTRATOR — Turn pipeline with policy enforcement, per-step trace, honest failure states
 
-- state/risk: queued / medium
-- requirements: FR-7, FR-8, AC-2, AC-5
+- state/risk: active / medium
+- requirements: AC-2, AC-5, AC-12, AC-13, FR-7, FR-8, FR-13
 - scope: not bounded
 - gates: tests: .venv/bin/python -m pytest tests/test_orchestrator.py -q, independent-review: pending
 - next: Run the task pre-flight.
@@ -75,7 +75,7 @@
 ### EVAL — Deterministic synthetic evaluation set with hit@k and policy metrics
 
 - state/risk: queued / low
-- requirements: FR-12, NFR-5, AC-10
+- requirements: AC-10, AC-12, AC-13, FR-12, NFR-5
 - scope: not bounded
 - gates: eval: .venv/bin/python evaluation.py
 - next: Run the task pre-flight.

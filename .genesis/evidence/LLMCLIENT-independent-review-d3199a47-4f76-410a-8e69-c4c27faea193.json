@@ -1,0 +1,13 @@
+{
+  "task": "LLMCLIENT",
+  "gate": "independent-review",
+  "kind": "review",
+  "attempt": "d3199a47-4f76-410a-8e69-c4c27faea193",
+  "human": "arif",
+  "reason": "Human reviewed stdlib one-call client and 12 tests; 30/30 green plus live smoke; approved in session",
+  "observed_at": "2026-10-26T15:11:56.879Z",
+  "source_hash": "2aaf74df75b9a5457bf96dc3900bcf1e6eb4b643119c1fa074631a4ee54e0c92",
+  "config_hash": "885a15fe5763ee9a125d6745a9e8f82d189bb297c05a00d57039997d030ed0cf",
+  "reviewed_proofs": "a1219a89025f73d7526dad2725a7f5cbc26a428ecbb86dac53b895517a851060",
+  "hash": "65fcd86021763a2bc10cff6dbfb03442f3a74122e66fa51a33c362704232bf95"
+}

@@ -4,11 +4,11 @@
 
 - objective: Educational GPT-style memory application (Memory Lab MVP): chat system that keeps recent working context, retrieves durable memories for a new question, uses one hosted Nemotron model call per turn for both answer and memory proposals, validates proposals in Python, and exposes each stage in a UI trace. Streamlit + PostgreSQL/pgvector + Redis + local embeddings, synthetic demo data only.
 - phase/status: build/active
-- active task: WORKMEM — Redis working memory: bounded history, TTL, clear-session, never durable
+- active task: ORCHESTRATOR — Turn pipeline with policy enforcement, per-step trace, honest failure states
 - blocker: none
 - next action: Run the task pre-flight.
 - phase instruction: Implement only the active task and prove it against current sources. Check `genesis query . impact PATH` before editing shared code.
-- gates: tests:pending
+- gates: tests:pending, independent-review:pending
 - recent failures: none
 
 ## Resume
@@ -17,9 +17,9 @@ Load Genesis and official Ponytail full, then run `genesis brief .` for the curr
 Fetch full records with `genesis context . --id ID` only when needed. Do not load project.json or historical proof wholesale.
 Ask the index before reading code: `genesis query . search|scope|callers|callees|impact|path` (`--json` for parsing). Run `genesis query . impact PATH` before editing shared code. Answers are advisory static analysis; `ambiguous` means candidates were not ruled out, so confirm in source.
 Run `genesis serve .` for a live map of the repository when structure is unclear; it reindexes on save and is read-only. Run `genesis index .` if the index is stale and nothing is watching.
-Context fingerprint: 855cf4f128cb0cf7f955181ba18883be882378debb14c7f45ee77d6496ddda71. Use --since only after receiving that full packet; kickoff is not the packet.
+Context fingerprint: ec3d43aade0338f973fd4add49dd765d6450b2082cf366686ee817178bde5c77. Use --since only after receiving that full packet; kickoff is not the packet.
 - DECISION-85104554: Every finished task is pushed to GitHub
 - DECISION-e44e746a: Docker is deploy-time, not build-time
-- DECISION-0083b937: ADR.md is the specification source
+- DECISION-22f72760: Default embedding model fixed
 Applicable invariants, active rules, authorization and proof references are in the packet. Truncated summaries are retrieval pointers, not the full evidence.
 Reuse fresh gates with --reuse. Reconcile interrupted attempts before replaying commands. Report state → evidence → blocker → next action; checkpoint before stopping.
