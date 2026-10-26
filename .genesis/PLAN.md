@@ -42,7 +42,7 @@
 
 ### WORKMEM — Redis working memory: bounded history, TTL, clear-session, never durable
 
-- state/risk: paused / low
+- state/risk: done / low
 - requirements: FR-1, FR-3, FR-8, AC-2, AC-9
 - scope: not bounded
 - gates: tests: .venv/bin/python -m pytest tests/test_working_memory.py -q
@@ -74,7 +74,7 @@
 
 ### EVAL — Deterministic synthetic evaluation set with hit@k and policy metrics
 
-- state/risk: active / low
+- state/risk: paused / low
 - requirements: AC-10, AC-12, AC-13, FR-12, NFR-5
 - scope: not bounded
 - gates: eval: .venv/bin/python evaluation.py
@@ -82,7 +82,7 @@
 
 ### DOCS — README matching implementation: setup, limits, hosted-access caveats, synthetic-data rule
 
-- state/risk: queued / low
+- state/risk: active / low
 - requirements: FR-11, AC-11
 - scope: not bounded
 - gates: docs: test -f README.md -a -f .env.example

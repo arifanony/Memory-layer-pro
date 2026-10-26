@@ -1,0 +1,30 @@
+{
+  "task": "WORKMEM",
+  "gate": "tests",
+  "kind": "command",
+  "attempt": "cf100d0c-b34f-483e-b289-5688f27370b1",
+  "command": ".venv/bin/python -m pytest tests/test_working_memory.py -q",
+  "started_at": "2026-10-26T15:58:08.683Z",
+  "observed_at": "2026-10-26T15:58:10.316Z",
+  "exit_code": 0,
+  "signal": null,
+  "stdout": ".......s                                                                 [100%]\n7 passed, 1 skipped in 0.37s\n",
+  "stderr": "",
+  "failure": null,
+  "receipt": null,
+  "revision": {
+    "commit": "e634bc33a0ad6f134608bda598394c455df1aa6c",
+    "dirty": true
+  },
+  "source_hash": "b844fbc9c1615384e433ef9dc0e726062cc5945218596b010143360b4770162a",
+  "before_hash": "b844fbc9c1615384e433ef9dc0e726062cc5945218596b010143360b4770162a",
+  "config_hash": "7bb6dd64d37b470fb8101eae3dc0c15dbc129b9ca4212feddc01d7de58c8a348",
+  "environment": {
+    "node": "v22.23.3",
+    "platform": "darwin",
+    "arch": "x64",
+    "verifier": "cbdddbf25e5ed5f3406b93881ae54f64d11a8c54f0bfe177d19d9d9946a6a971",
+    "variables": {}
+  },
+  "hash": "3120ac69232e8baaacc7042bce3ed2871c5a82a5edbc4f6b4880df88e6a6836a"
+}
