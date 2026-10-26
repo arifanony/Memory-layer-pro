@@ -17,12 +17,17 @@ if ! pg_isready -h localhost -p 5432 -q; then
 fi
 
 echo "== pgvector extension =="
-if [ ! -d "$PROJECT_DIR/.tools/pgvector-src" ]; then
-  git clone --branch v0.8.0 --depth 1 https://github.com/pgvector/pgvector.git \
-    "$PROJECT_DIR/.tools/pgvector-src"
+# make splits PG_CONFIG on spaces, so build through a space-free symlink.
+ln -sf "$PGBIN/pg_config" /tmp/ml-pgconfig
+SHAREDIR="$("$PGBIN/pg_config" --sharedir)"
+if [ ! -f "$SHAREDIR/extension/vector.control" ]; then
+  if [ ! -d "$PROJECT_DIR/.tools/pgvector-src" ]; then
+    git -c advice.detachedHead=false clone --branch v0.8.0 --depth 1 \
+      https://github.com/pgvector/pgvector.git "$PROJECT_DIR/.tools/pgvector-src"
+  fi
+  make -C "$PROJECT_DIR/.tools/pgvector-src" PG_CONFIG=/tmp/ml-pgconfig \
+    && make -C "$PROJECT_DIR/.tools/pgvector-src" PG_CONFIG=/tmp/ml-pgconfig install
 fi
-make -C "$PROJECT_DIR/.tools/pgvector-src" PG_CONFIG="$PGBIN/pg_config" >/dev/null \
-  && make -C "$PROJECT_DIR/.tools/pgvector-src" PG_CONFIG="$PGBIN/pg_config" install
 createdb -h localhost -p 5432 -U postgres memory_lab 2>/dev/null || true
 psql -h localhost -p 5432 -U postgres -d memory_lab -c "CREATE EXTENSION IF NOT EXISTS vector;"
 
