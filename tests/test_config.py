@@ -2,7 +2,7 @@
 
 import pytest
 
-from config import ConfigError, load, validate
+from config import ConfigError, _read_dotenv, load, validate
 
 
 def test_defaults_apply():
@@ -30,3 +30,13 @@ def test_missing_model_fails_actionably():
 def test_bad_int_rejected():
     with pytest.raises(ConfigError, match="TOP_K"):
         load({"NVIDIA_API_KEY": "k", "NVIDIA_MODEL": "m", "TOP_K": "many"})
+
+
+def test_dotenv_reader_ignores_comments_and_empty(tmp_path):
+    path = tmp_path / ".env"
+    path.write_text('# comment\n\nnvidia_api_key = "abc"\nEMPTY=\n')
+    assert _read_dotenv(path) == {"nvidia_api_key": "abc"}
+
+
+def test_dotenv_missing_file_returns_empty(tmp_path):
+    assert _read_dotenv(tmp_path / "nope.env") == {}

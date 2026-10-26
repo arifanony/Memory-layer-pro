@@ -34,6 +34,29 @@ def _get(env: dict, name: str, default: str = "") -> str:
     return default
 
 
+def _read_dotenv(path: object = ".env") -> dict:
+    """Minimal .env reader for local runs (KEY=VALUE, # comments, quotes).
+
+    Only whole-file values; real environment variables always win. Never logs.
+    """
+    from pathlib import Path
+
+    found: dict = {}
+    try:
+        lines = Path(path).read_text().splitlines()
+    except OSError:
+        return found
+    for line in lines:
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        key, value = key.strip(), value.strip().strip('"').strip("'")
+        if key and value:
+            found.setdefault(key, value)
+    return found
+
+
 @dataclass(frozen=True)
 class Settings:
     nvidia_api_key: str
@@ -47,8 +70,15 @@ class Settings:
 
 
 def load(env: dict | None = None) -> Settings:
-    """Build Settings from the environment. Use `load({})` in tests."""
-    src = dict(os.environ) if env is None else dict(env)
+    """Build Settings from the environment, falling back to a local .env file
+    next to this module. Use `load({})` in tests to skip the file entirely."""
+    if env is None:
+        from pathlib import Path
+
+        src = _read_dotenv(Path(__file__).resolve().parent / ".env")
+        src.update({k: v for k, v in os.environ.items() if v})
+    else:
+        src = dict(env)
 
     def _int(name: str, default: int) -> int:
         raw = _get(src, name, str(default))
@@ -77,7 +107,7 @@ def validate(settings: Settings) -> Settings:
     if not settings.nvidia_model:
         problems.append(
             "NVIDIA_MODEL is missing: pick an id from the catalog "
-            "(e.g. nvidia/llama-3.1-nemotron-70b-instruct) and set it in .env."
+            "(verified: nvidia/nemotron-3.5-lightning-30b-a3b) and set it in .env."
         )
     if settings.top_k < 1:
         problems.append(f"TOP_K must be >= 1, got {settings.top_k}.")
