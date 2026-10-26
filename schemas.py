@@ -7,9 +7,46 @@ pins the shapes the ADR specifies.
 
 from __future__ import annotations
 
+from dataclasses import dataclass
+from typing import Protocol
+
 # Allowlisted memory categories. Ephemeral statements are filtered by policy,
 # never persisted; the rest map to durable semantic/procedural memory.
 CATEGORIES = ("fact", "preference", "procedure")
+
+
+@dataclass(frozen=True)
+class StoredMemory:
+    id: str
+    text: str
+    category: str
+    score: float = 0.0
+
+
+@dataclass
+class MemoryEvent:
+    type: str  # ADD, UPDATE, SUPERSEDE, REJECT
+    reason: str
+    memory_id: str | None = None
+    supersedes: str | None = None
+
+
+class MemoryStore(Protocol):
+    """Durable backend contract. MEMSTORE implements this on pgvector."""
+
+    def search(self, user_id: str, vector: list[float], top_k: int) -> list[StoredMemory]: ...
+    def add(self, user_id: str, text: str, category: str,
+            vector: list[float]) -> StoredMemory: ...
+    def link_supersede(self, old_id: str, new_id: str) -> None: ...
+    def record_event(self, user_id: str, event: MemoryEvent) -> None: ...
+
+
+class WorkingMemory(Protocol):
+    """Short-lived context contract. WORKMEM implements this on Redis."""
+
+    def read(self, session_id: str, limit: int) -> list[str]: ...
+    def append(self, session_id: str, turn: str) -> None: ...
+    def clear(self, session_id: str) -> None: ...
 
 # JSON contract for one hosted model result. The model returns an answer plus
 # zero or more memory proposals; Python validates and decides persistence.

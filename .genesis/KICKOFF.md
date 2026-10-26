@@ -4,11 +4,11 @@
 
 - objective: Educational GPT-style memory application (Memory Lab MVP): chat system that keeps recent working context, retrieves durable memories for a new question, uses one hosted Nemotron model call per turn for both answer and memory proposals, validates proposals in Python, and exposes each stage in a UI trace. Streamlit + PostgreSQL/pgvector + Redis + local embeddings, synthetic demo data only.
 - phase/status: build/active
-- active task: UI — Streamlit chat, controls, retrieval toggle, redacted trace, error and reset states
+- active task: EVAL — Deterministic synthetic evaluation set with hit@k and policy metrics
 - blocker: none
 - next action: Run the task pre-flight.
 - phase instruction: Implement only the active task and prove it against current sources. Check `genesis query . impact PATH` before editing shared code.
-- gates: tests:pending
+- gates: eval:pending
 - recent failures: none
 
 ## Resume
@@ -17,7 +17,7 @@ Load Genesis and official Ponytail full, then run `genesis brief .` for the curr
 Fetch full records with `genesis context . --id ID` only when needed. Do not load project.json or historical proof wholesale.
 Ask the index before reading code: `genesis query . search|scope|callers|callees|impact|path` (`--json` for parsing). Run `genesis query . impact PATH` before editing shared code. Answers are advisory static analysis; `ambiguous` means candidates were not ruled out, so confirm in source.
 Run `genesis serve .` for a live map of the repository when structure is unclear; it reindexes on save and is read-only. Run `genesis index .` if the index is stale and nothing is watching.
-Context fingerprint: efd84c6cf72ac5a23438aa369acb3688473d96bdaa9f0f1741722465aec963ae. Use --since only after receiving that full packet; kickoff is not the packet.
+Context fingerprint: 0dd9a0e577d472bb483b9471cab961b2e77e84615497d9627837716f0ce59e63. Use --since only after receiving that full packet; kickoff is not the packet.
 - DECISION-85104554: Every finished task is pushed to GitHub
 - DECISION-e44e746a: Docker is deploy-time, not build-time
 - DECISION-22f72760: Default embedding model fixed

@@ -17,8 +17,14 @@ class FakeStore:
     def __init__(self, memories=(), fail_on=()):
         self.memories = {m.id: m for m in memories}
         self.links = []
+        self.events = []
         self.fail_on = set(fail_on)
         self.next_id = 100
+
+    def record_event(self, user_id, event):
+        if "events" in self.fail_on:
+            raise OSError("events down")
+        self.events.append(event)
 
     def search(self, user_id, vector, top_k):
         if "search" in self.fail_on:

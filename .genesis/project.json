@@ -9,7 +9,7 @@
     "non_goals": [],
     "trust_boundary": "local repository",
     "created_at": "2026-10-26T13:10:15.710Z",
-    "updated_at": "2026-10-26T15:17:06.210Z"
+    "updated_at": "2026-10-26T15:54:28.612Z"
   },
   "policy": {
     "ponytail": "full",
@@ -25,7 +25,7 @@
   "lifecycle": {
     "phase": "build",
     "status": "active",
-    "active_task": "UI",
+    "active_task": "EVAL",
     "blocker": null,
     "next_action": "Run the task pre-flight."
   },
@@ -2062,7 +2062,7 @@
     {
       "id": "MEMSTORE",
       "outcome": "PostgreSQL pgvector store: user-scoped CRUD, vector retrieval, migration docs",
-      "state": "paused",
+      "state": "done",
       "risk": "medium",
       "owner": null,
       "scope": [],
@@ -2085,16 +2085,28 @@
           "kind": "command",
           "command": ".venv/bin/python -m pytest tests/test_memory_store.py -q",
           "mandatory": true,
-          "status": "pending",
-          "evidence": null
+          "status": "pass",
+          "evidence": {
+            "path": ".genesis/evidence/MEMSTORE-tests-9061e615-1f96-4ab4-ae80-fe591b3b8607.json",
+            "hash": "cc225d8e569fe081098ca4dc974391b66180e47df5eb5a04d4b66263cff73053",
+            "source_hash": "54f283c7d2b2392f29aa3429eb675a8533ba74cc21883a0d292bfc5a3d9abc9c",
+            "config_hash": "7386d4ce832822d0802601f27fcc5b388161f362f5b20065f85ea7a071ad57cf",
+            "observed_at": "2026-10-26T15:53:56.738Z"
+          }
         },
         {
           "id": "independent-review",
           "kind": "review",
           "command": "",
           "mandatory": true,
-          "status": "pending",
-          "evidence": null
+          "status": "pass",
+          "evidence": {
+            "path": ".genesis/evidence/MEMSTORE-independent-review-0f20960e-b4d3-4814-b2d0-f0bed1bc2c8e.json",
+            "hash": "4b8326709068918718d7b6cc371b325188f506f160f009de92dfb7432fc7c70b",
+            "source_hash": "54f283c7d2b2392f29aa3429eb675a8533ba74cc21883a0d292bfc5a3d9abc9c",
+            "config_hash": "7386d4ce832822d0802601f27fcc5b388161f362f5b20065f85ea7a071ad57cf",
+            "observed_at": "2026-10-26T15:54:27.441Z"
+          }
         }
       ],
       "next_action": "Run the task pre-flight.",
@@ -2103,7 +2115,7 @@
       "failures": [],
       "limitations": [],
       "created_at": "2026-10-26T13:16:17.875Z",
-      "updated_at": "2026-10-26T13:16:17.875Z",
+      "updated_at": "2026-10-26T15:54:28.569Z",
       "base_manifest": {
         ".env.example": "b6a0459f0805215d9ae637a21122d82bdc7137005eb8fb947efbc59625a83881",
         ".gitignore": "94fab4fbcc81cd90750acddb27906d20982097b16672adf23e9a7eed8ad0b616",
@@ -2335,7 +2347,7 @@
     {
       "id": "UI",
       "outcome": "Streamlit chat, controls, retrieval toggle, redacted trace, error and reset states",
-      "state": "active",
+      "state": "paused",
       "risk": "low",
       "owner": null,
       "scope": [],
@@ -2395,7 +2407,7 @@
     {
       "id": "EVAL",
       "outcome": "Deterministic synthetic evaluation set with hit@k and policy metrics",
-      "state": "queued",
+      "state": "active",
       "risk": "low",
       "owner": null,
       "scope": [],
@@ -2426,7 +2438,34 @@
       "failures": [],
       "limitations": [],
       "created_at": "2026-10-26T13:16:21.557Z",
-      "updated_at": "2026-10-26T13:16:21.558Z"
+      "updated_at": "2026-10-26T13:16:21.558Z",
+      "base_manifest": {
+        ".env.example": "b6a0459f0805215d9ae637a21122d82bdc7137005eb8fb947efbc59625a83881",
+        ".gitignore": "94fab4fbcc81cd90750acddb27906d20982097b16672adf23e9a7eed8ad0b616",
+        ".python-version": "c873c269ee166fdf5e4fad805eab6a11cb0e1bb571c4587f38a564539b3a6d7b",
+        "ADR.md": "c98bf999a8ffdf03429845473d2ba2bff7eda7004078961d24ef92d2104edd24",
+        "PIPELINE.md": "87377e90066aaa4e1524b977c2306b037b820dcdaf019541a8e2d6c109820897",
+        "README.md": "0f851aa1c9263cb46f6f22c1fa7a50e0ffaa1077debccd2e3483a45610b4592c",
+        "SPEC.md": "d166f551c9ed202d1cddba76988f9aa1192230ca9dcf4d7f28e6365f1be94487",
+        "app.py": "21110e345c35d555c38fa5457924b9c62c2ddae834e314e3295c01c862647df3",
+        "config.py": "e11804b54707df3343535ab9e73bec1e4dca67db013c637d20167b0c4c7ea63c",
+        "embeddings.py": "8591eb48aa1f66262f9deaa9cb3afebd75dd86eaa538759686214cc2c2cc50dd",
+        "llm_client.py": "f50a133f466beae25a30cc9f013792302e42fb58a16f07d7bba20fd7e2bc44f1",
+        "memory_store.py": "3c4c925427b9075a0f609f3bbbdc4bf6266e7e79323cee96b73256766f9535df",
+        "orchestrator.py": "2b9e369befebbed944217456dcc37830a1779d8d7e9526458d6fd484e81f437d",
+        "privacy.py": "e6051aa0a9d920a7d047e4bea9add33ca078461f58c9f7f7781e1d76e537ccb0",
+        "pyproject.toml": "d96054b323c5efc58c6e39aa5cf76f7918fb9386d709a897abb3ebb422cc7f64",
+        "schemas.py": "e606fb9a138ff5a7d2688ea0c0bfbb3d3b40ee44bab4296cc76c2ed83ed432ca",
+        "scripts/setup-services.sh": "a7d8feda8b67784fe354c82927c61b0d068c03c0d88730d37ab31c0d20c83d9d",
+        "scripts/stop-services.sh": "784d23590748d2781d7e256bd2115d935f48d9785fbf1c1b4a6a813bcc8d53b9",
+        "tests/conftest.py": "9714deeea6991c8c43c4782096915679e6a0c81ec961c84339abd13d5b916163",
+        "tests/test_config.py": "62442d3b6c94f6a0cfa72061efaeaa0659711893788dfa3cea1ec29b1d9a2ff9",
+        "tests/test_embeddings.py": "9bdbeeca7bbbf26352e167788118812bdc4fa4dd7fb010fe6720991bc01c9b3c",
+        "tests/test_llm_client.py": "e2d8f2d82f519533554e3bf3d85a2597729276d76822aa97fd0328489556b7b3",
+        "tests/test_memory_store.py": "749b00888b2c137a2c12e859ba61d2e53d62182777b9441d494e30fc888d086c",
+        "tests/test_orchestrator.py": "d7f29c60e1e1210c2744b63a43386559bbbce068af555b942a02bbdc9c3d5ec6",
+        "tests/test_privacy.py": "922680cd902b6e3dba6170c32c3240645b4a9da4798f79bf4f3cde4b91001fbe"
+      }
     },
     {
       "id": "DOCS",
@@ -2535,6 +2574,33 @@
       "task": "ORCHESTRATOR",
       "human": "arif",
       "reason": "Human reviewed pipeline, policy, events, failure honesty; 41/41 green; approved in session",
+      "revision": null
+    },
+    {
+      "id": "f2774d4d-bf66-407e-81d4-cb64a2ca3cb0",
+      "at": "2026-10-26T15:51:20.443Z",
+      "action": "pause",
+      "task": "UI",
+      "human": null,
+      "reason": null,
+      "revision": null
+    },
+    {
+      "id": "23215a92-bb6a-428c-85f8-02d27912fbc4",
+      "at": "2026-10-26T15:51:21.143Z",
+      "action": "resume",
+      "task": "MEMSTORE",
+      "human": null,
+      "reason": null,
+      "revision": null
+    },
+    {
+      "id": "0f20960e-b4d3-4814-b2d0-f0bed1bc2c8e",
+      "at": "2026-10-26T15:54:27.441Z",
+      "action": "approve",
+      "task": "MEMSTORE",
+      "human": "arif",
+      "reason": "Human reviewed pgvector schema, scoping, events; 46 pass 2 live-skips; approved in session",
       "revision": null
     }
   ],
@@ -2682,6 +2748,30 @@
       "cost": null,
       "stop_reason": null,
       "ended_at": "2026-10-26T15:16:31.183Z"
+    },
+    {
+      "id": "9061e615-1f96-4ab4-ae80-fe591b3b8607",
+      "task": "MEMSTORE",
+      "kind": "gate",
+      "command": ".venv/bin/python -m pytest tests/test_memory_store.py -q",
+      "timeout": 120000,
+      "authorization": null,
+      "pid": 39670,
+      "child_pid": 39728,
+      "started_at": "2026-10-26T15:53:55.319Z",
+      "status": "passed",
+      "before_hash": "54f283c7d2b2392f29aa3429eb675a8533ba74cc21883a0d292bfc5a3d9abc9c",
+      "config_hash": "7386d4ce832822d0802601f27fcc5b388161f362f5b20065f85ea7a071ad57cf",
+      "environment": {
+        "node": "v22.23.3",
+        "platform": "darwin",
+        "arch": "x64",
+        "verifier": "cbdddbf25e5ed5f3406b93881ae54f64d11a8c54f0bfe177d19d9d9946a6a971",
+        "variables": {}
+      },
+      "cost": null,
+      "stop_reason": null,
+      "ended_at": "2026-10-26T15:53:56.738Z"
     }
   ],
   "authorizations": [],

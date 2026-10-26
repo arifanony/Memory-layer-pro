@@ -10,11 +10,11 @@ from __future__ import annotations
 
 import time
 from dataclasses import dataclass, field
-from typing import Protocol
 
 from config import Settings
 from llm_client import LLMError, ModelResult, Proposal, complete
 from privacy import MaskResult, contains_pii, mask
+from schemas import MemoryEvent, MemoryStore, StoredMemory, WorkingMemory
 
 SYSTEM_PROMPT = (
     "You are a memory-aware assistant. Reply with JSON only, exactly:\n"
@@ -27,22 +27,6 @@ SYSTEM_PROMPT = (
 # Same-category near-duplicate text counts as a contradiction to version,
 # not a duplicate to drop. ponytail: one threshold, documented here.
 SUPERSEDE_SIMILARITY = 0.9
-
-
-@dataclass
-class StoredMemory:
-    id: str
-    text: str
-    category: str
-    score: float = 0.0
-
-
-@dataclass
-class MemoryEvent:
-    type: str  # ADD, UPDATE, SUPERSEDE, REJECT
-    reason: str
-    memory_id: str | None = None
-    supersedes: str | None = None
 
 
 @dataclass
@@ -63,23 +47,6 @@ class TurnResult:
     decisions: list[str] = field(default_factory=list)
     events: list[MemoryEvent] = field(default_factory=list)
     trace: list[TraceStep] = field(default_factory=list)
-
-
-class MemoryStore(Protocol):
-    """Durable backend contract. MEMSTORE implements this on pgvector."""
-
-    def search(self, user_id: str, vector: list[float], top_k: int) -> list[StoredMemory]: ...
-    def add(self, user_id: str, text: str, category: str,
-            vector: list[float]) -> StoredMemory: ...
-    def link_supersede(self, old_id: str, new_id: str) -> None: ...
-
-
-class WorkingMemory(Protocol):
-    """Short-lived context contract. WORKMEM implements this on Redis."""
-
-    def read(self, session_id: str, limit: int) -> list[str]: ...
-    def append(self, session_id: str, turn: str) -> None: ...
-    def clear(self, session_id: str) -> None: ...
 
 
 def build_prompt(masked_input: str, context: list[str],
@@ -182,6 +149,12 @@ def run_turn(user_text: str, user_id: str, session_id: str, settings: Settings,
     step("validate", "Parse, screen, apply policy", "ok",
          f"{len([d for d in decisions if d.type != 'REJECT'])} kept, "
          f"{len([d for d in decisions if d.type == 'REJECT'])} rejected")
+    try:
+        for event in decisions:
+            store.record_event(user_id, event)
+        step("events", "Append memory events", "ok", f"{len(decisions)} event(s)")
+    except (OSError, ValueError) as exc:
+        step("events", "Append memory events", "failed", str(exc))
 
     try:
         working.append(session_id, f"user: {masked.text}")

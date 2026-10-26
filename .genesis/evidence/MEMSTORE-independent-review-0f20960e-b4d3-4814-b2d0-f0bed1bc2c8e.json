@@ -1,0 +1,13 @@
+{
+  "task": "MEMSTORE",
+  "gate": "independent-review",
+  "kind": "review",
+  "attempt": "0f20960e-b4d3-4814-b2d0-f0bed1bc2c8e",
+  "human": "arif",
+  "reason": "Human reviewed pgvector schema, scoping, events; 46 pass 2 live-skips; approved in session",
+  "observed_at": "2026-10-26T15:54:27.441Z",
+  "source_hash": "54f283c7d2b2392f29aa3429eb675a8533ba74cc21883a0d292bfc5a3d9abc9c",
+  "config_hash": "7386d4ce832822d0802601f27fcc5b388161f362f5b20065f85ea7a071ad57cf",
+  "reviewed_proofs": "b5016a88e39e7bd9abb71f5e2f3b31bf9bbc66f821c31ddf0c68c24532e640f1",
+  "hash": "4b8326709068918718d7b6cc371b325188f506f160f009de92dfb7432fc7c70b"
+}

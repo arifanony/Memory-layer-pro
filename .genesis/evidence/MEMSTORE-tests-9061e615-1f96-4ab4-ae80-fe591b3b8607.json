@@ -1,0 +1,30 @@
+{
+  "task": "MEMSTORE",
+  "gate": "tests",
+  "kind": "command",
+  "attempt": "9061e615-1f96-4ab4-ae80-fe591b3b8607",
+  "command": ".venv/bin/python -m pytest tests/test_memory_store.py -q",
+  "started_at": "2026-10-26T15:53:55.319Z",
+  "observed_at": "2026-10-26T15:53:56.738Z",
+  "exit_code": 0,
+  "signal": null,
+  "stdout": ".....ss                                                                  [100%]\n5 passed, 2 skipped in 0.26s\n",
+  "stderr": "",
+  "failure": null,
+  "receipt": null,
+  "revision": {
+    "commit": "135716d75ff7048a21108ca0a05ac8bb49d843da",
+    "dirty": true
+  },
+  "source_hash": "54f283c7d2b2392f29aa3429eb675a8533ba74cc21883a0d292bfc5a3d9abc9c",
+  "before_hash": "54f283c7d2b2392f29aa3429eb675a8533ba74cc21883a0d292bfc5a3d9abc9c",
+  "config_hash": "7386d4ce832822d0802601f27fcc5b388161f362f5b20065f85ea7a071ad57cf",
+  "environment": {
+    "node": "v22.23.3",
+    "platform": "darwin",
+    "arch": "x64",
+    "verifier": "cbdddbf25e5ed5f3406b93881ae54f64d11a8c54f0bfe177d19d9d9946a6a971",
+    "variables": {}
+  },
+  "hash": "cc225d8e569fe081098ca4dc974391b66180e47df5eb5a04d4b66263cff73053"
+}

@@ -34,10 +34,10 @@
 
 ### MEMSTORE — PostgreSQL pgvector store: user-scoped CRUD, vector retrieval, migration docs
 
-- state/risk: paused / medium
+- state/risk: done / medium
 - requirements: AC-2, AC-5, AC-12, FR-5, FR-7, FR-13, NFR-3
 - scope: not bounded
-- gates: tests: .venv/bin/python -m pytest tests/test_memory_store.py -q, independent-review: pending
+- gates: tests: .venv/bin/python -m pytest tests/test_memory_store.py -q, independent-review: pass
 - next: Run the task pre-flight.
 
 ### WORKMEM — Redis working memory: bounded history, TTL, clear-session, never durable
@@ -66,7 +66,7 @@
 
 ### UI — Streamlit chat, controls, retrieval toggle, redacted trace, error and reset states
 
-- state/risk: active / low
+- state/risk: paused / low
 - requirements: FR-1, FR-9, FR-10, NFR-4, AC-7, AC-8
 - scope: not bounded
 - gates: tests: .venv/bin/python -m pytest tests/test_ui_trace.py -q
@@ -74,7 +74,7 @@
 
 ### EVAL — Deterministic synthetic evaluation set with hit@k and policy metrics
 
-- state/risk: queued / low
+- state/risk: active / low
 - requirements: AC-10, AC-12, AC-13, FR-12, NFR-5
 - scope: not bounded
 - gates: eval: .venv/bin/python evaluation.py
