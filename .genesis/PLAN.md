@@ -58,15 +58,15 @@
 
 ### ORCHESTRATOR — Turn pipeline with policy enforcement, per-step trace, honest failure states
 
-- state/risk: active / medium
+- state/risk: done / medium
 - requirements: AC-2, AC-5, AC-12, AC-13, FR-7, FR-8, FR-13
 - scope: not bounded
-- gates: tests: .venv/bin/python -m pytest tests/test_orchestrator.py -q, independent-review: pending
+- gates: tests: .venv/bin/python -m pytest tests/test_orchestrator.py -q, independent-review: pass
 - next: Run the task pre-flight.
 
 ### UI — Streamlit chat, controls, retrieval toggle, redacted trace, error and reset states
 
-- state/risk: queued / low
+- state/risk: active / low
 - requirements: FR-1, FR-9, FR-10, NFR-4, AC-7, AC-8
 - scope: not bounded
 - gates: tests: .venv/bin/python -m pytest tests/test_ui_trace.py -q

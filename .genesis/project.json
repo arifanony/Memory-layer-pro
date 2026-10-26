@@ -9,7 +9,7 @@
     "non_goals": [],
     "trust_boundary": "local repository",
     "created_at": "2026-10-26T13:10:15.710Z",
-    "updated_at": "2026-10-26T15:11:57.920Z"
+    "updated_at": "2026-10-26T15:17:06.210Z"
   },
   "policy": {
     "ponytail": "full",
@@ -25,7 +25,7 @@
   "lifecycle": {
     "phase": "build",
     "status": "active",
-    "active_task": "ORCHESTRATOR",
+    "active_task": "UI",
     "blocker": null,
     "next_action": "Run the task pre-flight."
   },
@@ -2255,7 +2255,7 @@
     {
       "id": "ORCHESTRATOR",
       "outcome": "Turn pipeline with policy enforcement, per-step trace, honest failure states",
-      "state": "active",
+      "state": "done",
       "risk": "medium",
       "owner": null,
       "scope": [],
@@ -2278,16 +2278,28 @@
           "kind": "command",
           "command": ".venv/bin/python -m pytest tests/test_orchestrator.py -q",
           "mandatory": true,
-          "status": "pending",
-          "evidence": null
+          "status": "pass",
+          "evidence": {
+            "path": ".genesis/evidence/ORCHESTRATOR-tests-b575572d-2017-471e-80f3-61279e0eb3e5.json",
+            "hash": "19437bb47a964c10c53a7f52cccc37446a2206a3d317cdf12071269dd955f7e8",
+            "source_hash": "aacae51cdf61678fdd17ca9794c5425e87df3f6d8b7af2c7a7d937589a9b9e87",
+            "config_hash": "d4aaf8a895562e72b6af394a0b1a7634942059d5aafa4b480235a355d2c2ea81",
+            "observed_at": "2026-10-26T15:16:31.184Z"
+          }
         },
         {
           "id": "independent-review",
           "kind": "review",
           "command": "",
           "mandatory": true,
-          "status": "pending",
-          "evidence": null
+          "status": "pass",
+          "evidence": {
+            "path": ".genesis/evidence/ORCHESTRATOR-independent-review-778ed4d6-1644-42db-94ac-cea8e874483f.json",
+            "hash": "79236b94bf46c165629fdcee16ba1a667b48c7f4fe3024d5f3c25182f351c2b4",
+            "source_hash": "aacae51cdf61678fdd17ca9794c5425e87df3f6d8b7af2c7a7d937589a9b9e87",
+            "config_hash": "d4aaf8a895562e72b6af394a0b1a7634942059d5aafa4b480235a355d2c2ea81",
+            "observed_at": "2026-10-26T15:17:04.915Z"
+          }
         }
       ],
       "next_action": "Run the task pre-flight.",
@@ -2296,7 +2308,7 @@
       "failures": [],
       "limitations": [],
       "created_at": "2026-10-26T13:16:20.029Z",
-      "updated_at": "2026-10-26T13:16:20.030Z",
+      "updated_at": "2026-10-26T15:17:06.166Z",
       "base_manifest": {
         ".env.example": "b6a0459f0805215d9ae637a21122d82bdc7137005eb8fb947efbc59625a83881",
         ".gitignore": "94fab4fbcc81cd90750acddb27906d20982097b16672adf23e9a7eed8ad0b616",
@@ -2323,7 +2335,7 @@
     {
       "id": "UI",
       "outcome": "Streamlit chat, controls, retrieval toggle, redacted trace, error and reset states",
-      "state": "queued",
+      "state": "active",
       "risk": "low",
       "owner": null,
       "scope": [],
@@ -2355,7 +2367,30 @@
       "failures": [],
       "limitations": [],
       "created_at": "2026-10-26T13:16:20.814Z",
-      "updated_at": "2026-10-26T13:16:20.815Z"
+      "updated_at": "2026-10-26T13:16:20.815Z",
+      "base_manifest": {
+        ".env.example": "b6a0459f0805215d9ae637a21122d82bdc7137005eb8fb947efbc59625a83881",
+        ".gitignore": "94fab4fbcc81cd90750acddb27906d20982097b16672adf23e9a7eed8ad0b616",
+        ".python-version": "c873c269ee166fdf5e4fad805eab6a11cb0e1bb571c4587f38a564539b3a6d7b",
+        "ADR.md": "c98bf999a8ffdf03429845473d2ba2bff7eda7004078961d24ef92d2104edd24",
+        "PIPELINE.md": "87377e90066aaa4e1524b977c2306b037b820dcdaf019541a8e2d6c109820897",
+        "README.md": "0f851aa1c9263cb46f6f22c1fa7a50e0ffaa1077debccd2e3483a45610b4592c",
+        "SPEC.md": "d166f551c9ed202d1cddba76988f9aa1192230ca9dcf4d7f28e6365f1be94487",
+        "app.py": "21110e345c35d555c38fa5457924b9c62c2ddae834e314e3295c01c862647df3",
+        "config.py": "e11804b54707df3343535ab9e73bec1e4dca67db013c637d20167b0c4c7ea63c",
+        "embeddings.py": "8591eb48aa1f66262f9deaa9cb3afebd75dd86eaa538759686214cc2c2cc50dd",
+        "llm_client.py": "f50a133f466beae25a30cc9f013792302e42fb58a16f07d7bba20fd7e2bc44f1",
+        "orchestrator.py": "fb381e2919e18b2b26dd84c8ddfab5761634660996fb7c28ebef89908e35f526",
+        "privacy.py": "e6051aa0a9d920a7d047e4bea9add33ca078461f58c9f7f7781e1d76e537ccb0",
+        "pyproject.toml": "d96054b323c5efc58c6e39aa5cf76f7918fb9386d709a897abb3ebb422cc7f64",
+        "schemas.py": "d45094d4c45d1721e671707d478756bd800290e855a369aad904f954cded67cf",
+        "tests/conftest.py": "9714deeea6991c8c43c4782096915679e6a0c81ec961c84339abd13d5b916163",
+        "tests/test_config.py": "62442d3b6c94f6a0cfa72061efaeaa0659711893788dfa3cea1ec29b1d9a2ff9",
+        "tests/test_embeddings.py": "9bdbeeca7bbbf26352e167788118812bdc4fa4dd7fb010fe6720991bc01c9b3c",
+        "tests/test_llm_client.py": "e2d8f2d82f519533554e3bf3d85a2597729276d76822aa97fd0328489556b7b3",
+        "tests/test_orchestrator.py": "941dbca3a14004e7204fcccaf53617dedac090e6dcfe1622fe67c9da8d434eec",
+        "tests/test_privacy.py": "922680cd902b6e3dba6170c32c3240645b4a9da4798f79bf4f3cde4b91001fbe"
+      }
     },
     {
       "id": "EVAL",
@@ -2492,6 +2527,15 @@
       "human": "arif",
       "reason": "Human reviewed stdlib one-call client and 12 tests; 30/30 green plus live smoke; approved in session",
       "revision": null
+    },
+    {
+      "id": "778ed4d6-1644-42db-94ac-cea8e874483f",
+      "at": "2026-10-26T15:17:04.915Z",
+      "action": "approve",
+      "task": "ORCHESTRATOR",
+      "human": "arif",
+      "reason": "Human reviewed pipeline, policy, events, failure honesty; 41/41 green; approved in session",
+      "revision": null
     }
   ],
   "attempts": [
@@ -2614,6 +2658,30 @@
       "cost": null,
       "stop_reason": null,
       "ended_at": "2026-10-26T15:11:20.211Z"
+    },
+    {
+      "id": "b575572d-2017-471e-80f3-61279e0eb3e5",
+      "task": "ORCHESTRATOR",
+      "kind": "gate",
+      "command": ".venv/bin/python -m pytest tests/test_orchestrator.py -q",
+      "timeout": 120000,
+      "authorization": null,
+      "pid": 34265,
+      "child_pid": 34313,
+      "started_at": "2026-10-26T15:16:15.902Z",
+      "status": "passed",
+      "before_hash": "aacae51cdf61678fdd17ca9794c5425e87df3f6d8b7af2c7a7d937589a9b9e87",
+      "config_hash": "d4aaf8a895562e72b6af394a0b1a7634942059d5aafa4b480235a355d2c2ea81",
+      "environment": {
+        "node": "v22.23.3",
+        "platform": "darwin",
+        "arch": "x64",
+        "verifier": "cbdddbf25e5ed5f3406b93881ae54f64d11a8c54f0bfe177d19d9d9946a6a971",
+        "variables": {}
+      },
+      "cost": null,
+      "stop_reason": null,
+      "ended_at": "2026-10-26T15:16:31.183Z"
     }
   ],
   "authorizations": [],

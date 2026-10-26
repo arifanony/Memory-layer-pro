@@ -1,0 +1,13 @@
+{
+  "task": "ORCHESTRATOR",
+  "gate": "independent-review",
+  "kind": "review",
+  "attempt": "778ed4d6-1644-42db-94ac-cea8e874483f",
+  "human": "arif",
+  "reason": "Human reviewed pipeline, policy, events, failure honesty; 41/41 green; approved in session",
+  "observed_at": "2026-10-26T15:17:04.915Z",
+  "source_hash": "aacae51cdf61678fdd17ca9794c5425e87df3f6d8b7af2c7a7d937589a9b9e87",
+  "config_hash": "d4aaf8a895562e72b6af394a0b1a7634942059d5aafa4b480235a355d2c2ea81",
+  "reviewed_proofs": "eb5d8579f3c4b646097d379d7a5436f3f68b07a1015fe11e43c7cb1a40851c62",
+  "hash": "79236b94bf46c165629fdcee16ba1a667b48c7f4fe3024d5f3c25182f351c2b4"
+}

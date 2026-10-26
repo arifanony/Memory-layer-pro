@@ -1,0 +1,30 @@
+{
+  "task": "ORCHESTRATOR",
+  "gate": "tests",
+  "kind": "command",
+  "attempt": "b575572d-2017-471e-80f3-61279e0eb3e5",
+  "command": ".venv/bin/python -m pytest tests/test_orchestrator.py -q",
+  "started_at": "2026-10-26T15:16:15.902Z",
+  "observed_at": "2026-10-26T15:16:31.184Z",
+  "exit_code": 0,
+  "signal": null,
+  "stdout": "...........                                                              [100%]\n=============================== warnings summary ===============================\ntests/test_orchestrator.py::test_happy_path_persists_and_traces\n  /Users/arif/Projects/Memory layer/embeddings.py:42: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.\n    dim = model.get_sentence_embedding_dimension()\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n11 passed, 1 warning in 13.01s\n",
+  "stderr": "",
+  "failure": null,
+  "receipt": null,
+  "revision": {
+    "commit": "ddab95d5c5d7106d069dc9f114d6d931be2c9f63",
+    "dirty": true
+  },
+  "source_hash": "aacae51cdf61678fdd17ca9794c5425e87df3f6d8b7af2c7a7d937589a9b9e87",
+  "before_hash": "aacae51cdf61678fdd17ca9794c5425e87df3f6d8b7af2c7a7d937589a9b9e87",
+  "config_hash": "d4aaf8a895562e72b6af394a0b1a7634942059d5aafa4b480235a355d2c2ea81",
+  "environment": {
+    "node": "v22.23.3",
+    "platform": "darwin",
+    "arch": "x64",
+    "verifier": "cbdddbf25e5ed5f3406b93881ae54f64d11a8c54f0bfe177d19d9d9946a6a971",
+    "variables": {}
+  },
+  "hash": "19437bb47a964c10c53a7f52cccc37446a2206a3d317cdf12071269dd955f7e8"
+}
