@@ -1,0 +1,30 @@
+{
+  "task": "PRIVACY",
+  "gate": "tests",
+  "kind": "command",
+  "attempt": "d7d7074f-02c5-4aa8-bd6d-3e0f3f258a31",
+  "command": ".venv/bin/python -m pytest tests/test_privacy.py -q",
+  "started_at": "2026-10-26T14:08:56.842Z",
+  "observed_at": "2026-10-26T14:08:57.664Z",
+  "exit_code": 0,
+  "signal": null,
+  "stdout": "........                                                                 [100%]\n8 passed in 0.03s\n",
+  "stderr": "",
+  "failure": null,
+  "receipt": null,
+  "revision": {
+    "commit": "0c288b275cd90f6ed0051b0f3a8b114a057c850e",
+    "dirty": true
+  },
+  "source_hash": "964f874577f278735baefb6690eae1f2b429e6413708434ea33d8be87dd9cd80",
+  "before_hash": "964f874577f278735baefb6690eae1f2b429e6413708434ea33d8be87dd9cd80",
+  "config_hash": "50c4db3ae3919ef296ed45467d1b189a530d7910b8319006f983322839d08813",
+  "environment": {
+    "node": "v22.23.3",
+    "platform": "darwin",
+    "arch": "x64",
+    "verifier": "cbdddbf25e5ed5f3406b93881ae54f64d11a8c54f0bfe177d19d9d9946a6a971",
+    "variables": {}
+  },
+  "hash": "ba4e63bb3c6c1a7a9bd06334275bab7c2ef3c7df921201cb1f9dad675eb79310"
+}

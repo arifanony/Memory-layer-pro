@@ -9,7 +9,7 @@
     "non_goals": [],
     "trust_boundary": "local repository",
     "created_at": "2026-10-26T13:10:15.710Z",
-    "updated_at": "2026-10-26T13:40:48.597Z"
+    "updated_at": "2026-10-26T14:09:26.353Z"
   },
   "policy": {
     "ponytail": "full",
@@ -25,7 +25,7 @@
   "lifecycle": {
     "phase": "build",
     "status": "active",
-    "active_task": "PRIVACY",
+    "active_task": "MEMSTORE",
     "blocker": null,
     "next_action": "Run the task pre-flight."
   },
@@ -69,14 +69,14 @@
       ]
     },
     "plan_check": {
-      "at": "2026-10-26T13:17:41.898Z",
-      "source_hash": "090958ab5d5ff8bf7f1d4b6ced4025624c9c0ca62566e95dbd7f062cfd89ba71"
+      "at": "2026-10-26T14:07:36.616Z",
+      "source_hash": "7d0b8257f87bae48ad08ea8da6e496835975056ee6f15132f50e5e5d5179231b"
     },
     "plan_approval": {
       "human": "arif",
-      "reason": "Human approved 10-task plan in session: SCAFFOLD through DOCS, executable gates, medium-risk tasks under independent review",
-      "at": "2026-10-26T13:18:13.086Z",
-      "source_hash": "090958ab5d5ff8bf7f1d4b6ced4025624c9c0ca62566e95dbd7f062cfd89ba71"
+      "reason": "Re-approved after gate commands switched to .venv/bin/python; requirements and coverage unchanged; human approved in session",
+      "at": "2026-10-26T14:08:34.360Z",
+      "source_hash": "7d0b8257f87bae48ad08ea8da6e496835975056ee6f15132f50e5e5d5179231b"
     }
   },
   "artifacts": [
@@ -275,7 +275,7 @@
     {
       "id": "PRIVACY",
       "outcome": "Local PII/secret detector with typed placeholders, request-scoped mapping, reject-by-default policy",
-      "state": "active",
+      "state": "done",
       "risk": "medium",
       "owner": null,
       "scope": [],
@@ -292,18 +292,30 @@
         {
           "id": "tests",
           "kind": "command",
-          "command": "python -m pytest tests/test_privacy.py -q",
+          "command": ".venv/bin/python -m pytest tests/test_privacy.py -q",
           "mandatory": true,
-          "status": "pending",
-          "evidence": null
+          "status": "pass",
+          "evidence": {
+            "path": ".genesis/evidence/PRIVACY-tests-d7d7074f-02c5-4aa8-bd6d-3e0f3f258a31.json",
+            "hash": "ba4e63bb3c6c1a7a9bd06334275bab7c2ef3c7df921201cb1f9dad675eb79310",
+            "source_hash": "964f874577f278735baefb6690eae1f2b429e6413708434ea33d8be87dd9cd80",
+            "config_hash": "50c4db3ae3919ef296ed45467d1b189a530d7910b8319006f983322839d08813",
+            "observed_at": "2026-10-26T14:08:57.664Z"
+          }
         },
         {
           "id": "independent-review",
           "kind": "review",
           "command": "",
           "mandatory": true,
-          "status": "pending",
-          "evidence": null
+          "status": "pass",
+          "evidence": {
+            "path": ".genesis/evidence/PRIVACY-independent-review-e5b7d803-2dfd-4efb-a965-d6204d19a1d9.json",
+            "hash": "d138c0ecd6e037e7e625cb4651141dfbb81fb2c377ce7befd1827cebe3b7576c",
+            "source_hash": "964f874577f278735baefb6690eae1f2b429e6413708434ea33d8be87dd9cd80",
+            "config_hash": "50c4db3ae3919ef296ed45467d1b189a530d7910b8319006f983322839d08813",
+            "observed_at": "2026-10-26T14:09:25.465Z"
+          }
         }
       ],
       "next_action": "Run the task pre-flight.",
@@ -312,7 +324,7 @@
       "failures": [],
       "limitations": [],
       "created_at": "2026-10-26T13:16:16.338Z",
-      "updated_at": "2026-10-26T13:16:16.344Z",
+      "updated_at": "2026-10-26T14:09:26.313Z",
       "base_manifest": {
         ".env": "2d35188ea96597a1df35fe44e9a96957717fc7c600f291ab6c79cb1fe6f4f307",
         ".env.example": "b6a0459f0805215d9ae637a21122d82bdc7137005eb8fb947efbc59625a83881",
@@ -1977,7 +1989,7 @@
     {
       "id": "EMBEDDINGS",
       "outcome": "Local embedding model with identical preprocessing on query and memory paths",
-      "state": "queued",
+      "state": "paused",
       "risk": "low",
       "owner": null,
       "scope": [],
@@ -1994,7 +2006,7 @@
         {
           "id": "tests",
           "kind": "command",
-          "command": "python -m pytest tests/test_embeddings.py -q",
+          "command": ".venv/bin/python -m pytest tests/test_embeddings.py -q",
           "mandatory": true,
           "status": "pending",
           "evidence": null
@@ -2006,12 +2018,29 @@
       "failures": [],
       "limitations": [],
       "created_at": "2026-10-26T13:16:17.168Z",
-      "updated_at": "2026-10-26T13:16:17.169Z"
+      "updated_at": "2026-10-26T13:16:17.169Z",
+      "base_manifest": {
+        ".env.example": "b6a0459f0805215d9ae637a21122d82bdc7137005eb8fb947efbc59625a83881",
+        ".gitignore": "94fab4fbcc81cd90750acddb27906d20982097b16672adf23e9a7eed8ad0b616",
+        ".python-version": "d0ccb900776f5eb236944f0ff6e1c5893c1a96354cf20f74335f0ed7f4795704",
+        "ADR.md": "c98bf999a8ffdf03429845473d2ba2bff7eda7004078961d24ef92d2104edd24",
+        "PIPELINE.md": "9b1b076c6c6b3a49ae4bc24c136fe8b3d310fdb3c63f97f21fbb56a04c7050a1",
+        "README.md": "0f851aa1c9263cb46f6f22c1fa7a50e0ffaa1077debccd2e3483a45610b4592c",
+        "SPEC.md": "42d3735ad61ce5319ced97a7416f4ec44522c2ea18afc164456e3ece076388be",
+        "app.py": "21110e345c35d555c38fa5457924b9c62c2ddae834e314e3295c01c862647df3",
+        "config.py": "e11804b54707df3343535ab9e73bec1e4dca67db013c637d20167b0c4c7ea63c",
+        "orchestrator.py": "6c76db8f11fc7330f691d4d501c677c135bf7c82a896682d83b2732014c3a5ac",
+        "privacy.py": "e6051aa0a9d920a7d047e4bea9add33ca078461f58c9f7f7781e1d76e537ccb0",
+        "pyproject.toml": "3b7ea3c6f405d991ec4bceb6c57f8aebd617ab9b1e93b6619ac18ef444d2dec4",
+        "schemas.py": "d45094d4c45d1721e671707d478756bd800290e855a369aad904f954cded67cf",
+        "tests/test_config.py": "62442d3b6c94f6a0cfa72061efaeaa0659711893788dfa3cea1ec29b1d9a2ff9",
+        "tests/test_privacy.py": "922680cd902b6e3dba6170c32c3240645b4a9da4798f79bf4f3cde4b91001fbe"
+      }
     },
     {
       "id": "MEMSTORE",
       "outcome": "PostgreSQL pgvector store: user-scoped CRUD, vector retrieval, migration docs",
-      "state": "queued",
+      "state": "active",
       "risk": "medium",
       "owner": null,
       "scope": [],
@@ -2030,7 +2059,7 @@
         {
           "id": "tests",
           "kind": "command",
-          "command": "python -m pytest tests/test_memory_store.py -q",
+          "command": ".venv/bin/python -m pytest tests/test_memory_store.py -q",
           "mandatory": true,
           "status": "pending",
           "evidence": null
@@ -2050,7 +2079,24 @@
       "failures": [],
       "limitations": [],
       "created_at": "2026-10-26T13:16:17.875Z",
-      "updated_at": "2026-10-26T13:16:17.875Z"
+      "updated_at": "2026-10-26T13:16:17.875Z",
+      "base_manifest": {
+        ".env.example": "b6a0459f0805215d9ae637a21122d82bdc7137005eb8fb947efbc59625a83881",
+        ".gitignore": "94fab4fbcc81cd90750acddb27906d20982097b16672adf23e9a7eed8ad0b616",
+        ".python-version": "d0ccb900776f5eb236944f0ff6e1c5893c1a96354cf20f74335f0ed7f4795704",
+        "ADR.md": "c98bf999a8ffdf03429845473d2ba2bff7eda7004078961d24ef92d2104edd24",
+        "PIPELINE.md": "9b1b076c6c6b3a49ae4bc24c136fe8b3d310fdb3c63f97f21fbb56a04c7050a1",
+        "README.md": "0f851aa1c9263cb46f6f22c1fa7a50e0ffaa1077debccd2e3483a45610b4592c",
+        "SPEC.md": "42d3735ad61ce5319ced97a7416f4ec44522c2ea18afc164456e3ece076388be",
+        "app.py": "21110e345c35d555c38fa5457924b9c62c2ddae834e314e3295c01c862647df3",
+        "config.py": "e11804b54707df3343535ab9e73bec1e4dca67db013c637d20167b0c4c7ea63c",
+        "orchestrator.py": "6c76db8f11fc7330f691d4d501c677c135bf7c82a896682d83b2732014c3a5ac",
+        "privacy.py": "e6051aa0a9d920a7d047e4bea9add33ca078461f58c9f7f7781e1d76e537ccb0",
+        "pyproject.toml": "3b7ea3c6f405d991ec4bceb6c57f8aebd617ab9b1e93b6619ac18ef444d2dec4",
+        "schemas.py": "d45094d4c45d1721e671707d478756bd800290e855a369aad904f954cded67cf",
+        "tests/test_config.py": "62442d3b6c94f6a0cfa72061efaeaa0659711893788dfa3cea1ec29b1d9a2ff9",
+        "tests/test_privacy.py": "922680cd902b6e3dba6170c32c3240645b4a9da4798f79bf4f3cde4b91001fbe"
+      }
     },
     {
       "id": "WORKMEM",
@@ -2074,7 +2120,7 @@
         {
           "id": "tests",
           "kind": "command",
-          "command": "python -m pytest tests/test_working_memory.py -q",
+          "command": ".venv/bin/python -m pytest tests/test_working_memory.py -q",
           "mandatory": true,
           "status": "pending",
           "evidence": null
@@ -2108,7 +2154,7 @@
         {
           "id": "tests",
           "kind": "command",
-          "command": "python -m pytest tests/test_llm_client.py -q",
+          "command": ".venv/bin/python -m pytest tests/test_llm_client.py -q",
           "mandatory": true,
           "status": "pending",
           "evidence": null
@@ -2151,7 +2197,7 @@
         {
           "id": "tests",
           "kind": "command",
-          "command": "python -m pytest tests/test_orchestrator.py -q",
+          "command": ".venv/bin/python -m pytest tests/test_orchestrator.py -q",
           "mandatory": true,
           "status": "pending",
           "evidence": null
@@ -2196,7 +2242,7 @@
         {
           "id": "tests",
           "kind": "command",
-          "command": "python -m pytest tests/test_ui_trace.py -q",
+          "command": ".venv/bin/python -m pytest tests/test_ui_trace.py -q",
           "mandatory": true,
           "status": "pending",
           "evidence": null
@@ -2230,7 +2276,7 @@
         {
           "id": "eval",
           "kind": "command",
-          "command": "python evaluation.py",
+          "command": ".venv/bin/python evaluation.py",
           "mandatory": true,
           "status": "pending",
           "evidence": null
@@ -2280,7 +2326,35 @@
   ],
   "learning_proposals": [],
   "cleanup_proposals": [],
-  "controls": [],
+  "controls": [
+    {
+      "id": "8489983c-fbbf-4c62-8234-5fedee20ac37",
+      "at": "2026-10-26T14:08:56.077Z",
+      "action": "pause",
+      "task": "EMBEDDINGS",
+      "human": null,
+      "reason": null,
+      "revision": null
+    },
+    {
+      "id": "7c4be59a-f548-4d4b-8616-3b5b42e14bc6",
+      "at": "2026-10-26T14:08:56.486Z",
+      "action": "resume",
+      "task": "PRIVACY",
+      "human": null,
+      "reason": null,
+      "revision": null
+    },
+    {
+      "id": "e5b7d803-2dfd-4efb-a965-d6204d19a1d9",
+      "at": "2026-10-26T14:09:25.465Z",
+      "action": "approve",
+      "task": "PRIVACY",
+      "human": "arif",
+      "reason": "Human reviewed privacy.py and 8 tests; 13/13 green; approved in session",
+      "revision": null
+    }
+  ],
   "attempts": [
     {
       "id": "8fd3bb28-ecf4-41d2-8197-e98ecda5c240",
@@ -2305,6 +2379,54 @@
       "cost": null,
       "stop_reason": null,
       "ended_at": "2026-10-26T13:40:40.743Z"
+    },
+    {
+      "id": "95e892e2-460b-4932-bc4e-ee9018eb018c",
+      "task": "PRIVACY",
+      "kind": "gate",
+      "command": "python -m pytest tests/test_privacy.py -q",
+      "timeout": 120000,
+      "authorization": null,
+      "pid": 29090,
+      "child_pid": 29118,
+      "started_at": "2026-10-26T14:06:49.948Z",
+      "status": "failed",
+      "before_hash": "964f874577f278735baefb6690eae1f2b429e6413708434ea33d8be87dd9cd80",
+      "config_hash": "bbc496d81c07c5a47a9bcd45d468954b7eba781ecc883f94ce7a2da3a36b675b",
+      "environment": {
+        "node": "v22.23.3",
+        "platform": "darwin",
+        "arch": "x64",
+        "verifier": "cbdddbf25e5ed5f3406b93881ae54f64d11a8c54f0bfe177d19d9d9946a6a971",
+        "variables": {}
+      },
+      "cost": null,
+      "stop_reason": "command-failed",
+      "ended_at": "2026-10-26T14:06:50.411Z"
+    },
+    {
+      "id": "d7d7074f-02c5-4aa8-bd6d-3e0f3f258a31",
+      "task": "PRIVACY",
+      "kind": "gate",
+      "command": ".venv/bin/python -m pytest tests/test_privacy.py -q",
+      "timeout": 120000,
+      "authorization": null,
+      "pid": 29623,
+      "child_pid": 29651,
+      "started_at": "2026-10-26T14:08:56.842Z",
+      "status": "passed",
+      "before_hash": "964f874577f278735baefb6690eae1f2b429e6413708434ea33d8be87dd9cd80",
+      "config_hash": "50c4db3ae3919ef296ed45467d1b189a530d7910b8319006f983322839d08813",
+      "environment": {
+        "node": "v22.23.3",
+        "platform": "darwin",
+        "arch": "x64",
+        "verifier": "cbdddbf25e5ed5f3406b93881ae54f64d11a8c54f0bfe177d19d9d9946a6a971",
+        "variables": {}
+      },
+      "cost": null,
+      "stop_reason": null,
+      "ended_at": "2026-10-26T14:08:57.664Z"
     }
   ],
   "authorizations": [],

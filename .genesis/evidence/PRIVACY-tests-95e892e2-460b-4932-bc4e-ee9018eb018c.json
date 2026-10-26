@@ -1,0 +1,30 @@
+{
+  "task": "PRIVACY",
+  "gate": "tests",
+  "kind": "command",
+  "attempt": "95e892e2-460b-4932-bc4e-ee9018eb018c",
+  "command": "python -m pytest tests/test_privacy.py -q",
+  "started_at": "2026-10-26T14:06:49.948Z",
+  "observed_at": "2026-10-26T14:06:50.411Z",
+  "exit_code": 127,
+  "signal": null,
+  "stdout": "",
+  "stderr": "/bin/sh: python: command not found\n",
+  "failure": "command-failed",
+  "receipt": null,
+  "revision": {
+    "commit": "0c288b275cd90f6ed0051b0f3a8b114a057c850e",
+    "dirty": true
+  },
+  "source_hash": "964f874577f278735baefb6690eae1f2b429e6413708434ea33d8be87dd9cd80",
+  "before_hash": "964f874577f278735baefb6690eae1f2b429e6413708434ea33d8be87dd9cd80",
+  "config_hash": "bbc496d81c07c5a47a9bcd45d468954b7eba781ecc883f94ce7a2da3a36b675b",
+  "environment": {
+    "node": "v22.23.3",
+    "platform": "darwin",
+    "arch": "x64",
+    "verifier": "cbdddbf25e5ed5f3406b93881ae54f64d11a8c54f0bfe177d19d9d9946a6a971",
+    "variables": {}
+  },
+  "hash": "dbbc692a5cff4434faff5b40a49f7f61a3febe20860bc0179b601b5b2f8838f5"
+}

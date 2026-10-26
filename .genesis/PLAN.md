@@ -4,7 +4,7 @@
 
 - workflow: new-product
 - phase: build
-- plan approval: arif at 2026-10-26T13:18:13.086Z
+- plan approval: arif at 2026-10-26T14:08:34.360Z
 
 ## Tasks
 
@@ -18,26 +18,26 @@
 
 ### PRIVACY — Local PII/secret detector with typed placeholders, request-scoped mapping, reject-by-default policy
 
-- state/risk: active / medium
+- state/risk: done / medium
 - requirements: FR-2, NFR-4, AC-6
 - scope: not bounded
-- gates: tests: python -m pytest tests/test_privacy.py -q, independent-review: pending
+- gates: tests: .venv/bin/python -m pytest tests/test_privacy.py -q, independent-review: pass
 - next: Run the task pre-flight.
 
 ### EMBEDDINGS — Local embedding model with identical preprocessing on query and memory paths
 
-- state/risk: queued / low
+- state/risk: paused / low
 - requirements: FR-4, NFR-2, AC-4
 - scope: not bounded
-- gates: tests: python -m pytest tests/test_embeddings.py -q
+- gates: tests: .venv/bin/python -m pytest tests/test_embeddings.py -q
 - next: Run the task pre-flight.
 
 ### MEMSTORE — PostgreSQL pgvector store: user-scoped CRUD, vector retrieval, migration docs
 
-- state/risk: queued / medium
+- state/risk: active / medium
 - requirements: FR-5, FR-7, NFR-3, AC-2, AC-5
 - scope: not bounded
-- gates: tests: python -m pytest tests/test_memory_store.py -q, independent-review: pending
+- gates: tests: .venv/bin/python -m pytest tests/test_memory_store.py -q, independent-review: pending
 - next: Run the task pre-flight.
 
 ### WORKMEM — Redis working memory: bounded history, TTL, clear-session, never durable
@@ -45,7 +45,7 @@
 - state/risk: queued / low
 - requirements: FR-1, FR-3, FR-8, AC-2, AC-9
 - scope: not bounded
-- gates: tests: python -m pytest tests/test_working_memory.py -q
+- gates: tests: .venv/bin/python -m pytest tests/test_working_memory.py -q
 - next: Run the task pre-flight.
 
 ### LLMCLIENT — One-call Nemotron client with strict structured response parsing
@@ -53,7 +53,7 @@
 - state/risk: queued / medium
 - requirements: FR-6, NFR-1, AC-3
 - scope: not bounded
-- gates: tests: python -m pytest tests/test_llm_client.py -q, independent-review: pending
+- gates: tests: .venv/bin/python -m pytest tests/test_llm_client.py -q, independent-review: pending
 - next: Run the task pre-flight.
 
 ### ORCHESTRATOR — Turn pipeline with policy enforcement, per-step trace, honest failure states
@@ -61,7 +61,7 @@
 - state/risk: queued / medium
 - requirements: FR-7, FR-8, AC-2, AC-5
 - scope: not bounded
-- gates: tests: python -m pytest tests/test_orchestrator.py -q, independent-review: pending
+- gates: tests: .venv/bin/python -m pytest tests/test_orchestrator.py -q, independent-review: pending
 - next: Run the task pre-flight.
 
 ### UI — Streamlit chat, controls, retrieval toggle, redacted trace, error and reset states
@@ -69,7 +69,7 @@
 - state/risk: queued / low
 - requirements: FR-1, FR-9, FR-10, NFR-4, AC-7, AC-8
 - scope: not bounded
-- gates: tests: python -m pytest tests/test_ui_trace.py -q
+- gates: tests: .venv/bin/python -m pytest tests/test_ui_trace.py -q
 - next: Run the task pre-flight.
 
 ### EVAL — Deterministic synthetic evaluation set with hit@k and policy metrics
@@ -77,7 +77,7 @@
 - state/risk: queued / low
 - requirements: FR-12, NFR-5, AC-10
 - scope: not bounded
-- gates: eval: python evaluation.py
+- gates: eval: .venv/bin/python evaluation.py
 - next: Run the task pre-flight.
 
 ### DOCS — README matching implementation: setup, limits, hosted-access caveats, synthetic-data rule
