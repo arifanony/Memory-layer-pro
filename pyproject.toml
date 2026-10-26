@@ -1,0 +1,18 @@
+[project]
+name = "memory-layer-pro"
+version = "0.1.0"
+description = "Educational GPT-style memory application (Memory Lab MVP). Synthetic data only."
+requires-python = ">=3.11"
+dependencies = [
+  "streamlit",
+  "psycopg[binary]",
+  "pgvector",
+  "redis",
+  "sentence-transformers",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
