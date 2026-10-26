@@ -1,0 +1,30 @@
+{
+  "task": "UI",
+  "gate": "tests",
+  "kind": "command",
+  "attempt": "8f7f1ad1-b270-4ec9-808c-a740e430ea90",
+  "command": ".venv/bin/python -m pytest tests/test_ui_trace.py -q",
+  "started_at": "2026-10-26T16:18:55.425Z",
+  "observed_at": "2026-10-26T16:18:57.694Z",
+  "exit_code": 0,
+  "signal": null,
+  "stdout": "......                                                                   [100%]\n6 passed in 0.89s\n",
+  "stderr": "",
+  "failure": null,
+  "receipt": null,
+  "revision": {
+    "commit": "cef0ef99166d11a0605e2100a1816cbc3ae5a300",
+    "dirty": true
+  },
+  "source_hash": "e6562ae8ee3ce584e982ebf3a543597cfbfae3719814313a9de6df8c40ca92e0",
+  "before_hash": "e6562ae8ee3ce584e982ebf3a543597cfbfae3719814313a9de6df8c40ca92e0",
+  "config_hash": "18fd3f3454881904c3a002dc0a888650c0d9cb5ea94324bf4221e08e6a2ba911",
+  "environment": {
+    "node": "v22.23.3",
+    "platform": "darwin",
+    "arch": "x64",
+    "verifier": "cbdddbf25e5ed5f3406b93881ae54f64d11a8c54f0bfe177d19d9d9946a6a971",
+    "variables": {}
+  },
+  "hash": "b4a2f1d26d851182008f500719dfacf837fbe8d38ea31663479bdde5db44352e"
+}

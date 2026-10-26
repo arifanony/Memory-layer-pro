@@ -9,7 +9,7 @@
     "non_goals": [],
     "trust_boundary": "local repository",
     "created_at": "2026-10-26T13:10:15.710Z",
-    "updated_at": "2026-10-26T15:58:11.422Z"
+    "updated_at": "2026-10-26T16:18:58.622Z"
   },
   "policy": {
     "ponytail": "full",
@@ -23,11 +23,11 @@
     }
   },
   "lifecycle": {
-    "phase": "build",
-    "status": "active",
-    "active_task": "DOCS",
+    "phase": "verify",
+    "status": "ready",
+    "active_task": null,
     "blocker": null,
-    "next_action": "Run the task pre-flight."
+    "next_action": "Review completed work and choose the next bounded outcome."
   },
   "commands": {},
   "workflow": {
@@ -2353,7 +2353,7 @@
     {
       "id": "UI",
       "outcome": "Streamlit chat, controls, retrieval toggle, redacted trace, error and reset states",
-      "state": "paused",
+      "state": "done",
       "risk": "low",
       "owner": null,
       "scope": [],
@@ -2375,8 +2375,14 @@
           "kind": "command",
           "command": ".venv/bin/python -m pytest tests/test_ui_trace.py -q",
           "mandatory": true,
-          "status": "pending",
-          "evidence": null
+          "status": "pass",
+          "evidence": {
+            "path": ".genesis/evidence/UI-tests-8f7f1ad1-b270-4ec9-808c-a740e430ea90.json",
+            "hash": "b4a2f1d26d851182008f500719dfacf837fbe8d38ea31663479bdde5db44352e",
+            "source_hash": "e6562ae8ee3ce584e982ebf3a543597cfbfae3719814313a9de6df8c40ca92e0",
+            "config_hash": "18fd3f3454881904c3a002dc0a888650c0d9cb5ea94324bf4221e08e6a2ba911",
+            "observed_at": "2026-10-26T16:18:57.694Z"
+          }
         }
       ],
       "next_action": "Run the task pre-flight.",
@@ -2385,7 +2391,7 @@
       "failures": [],
       "limitations": [],
       "created_at": "2026-10-26T13:16:20.814Z",
-      "updated_at": "2026-10-26T13:16:20.815Z",
+      "updated_at": "2026-10-26T16:18:58.621Z",
       "base_manifest": {
         ".env.example": "b6a0459f0805215d9ae637a21122d82bdc7137005eb8fb947efbc59625a83881",
         ".gitignore": "94fab4fbcc81cd90750acddb27906d20982097b16672adf23e9a7eed8ad0b616",
@@ -2476,7 +2482,7 @@
     {
       "id": "DOCS",
       "outcome": "README matching implementation: setup, limits, hosted-access caveats, synthetic-data rule",
-      "state": "active",
+      "state": "paused",
       "risk": "low",
       "owner": null,
       "scope": [],
@@ -2652,6 +2658,24 @@
       "at": "2026-10-26T15:57:13.890Z",
       "action": "resume",
       "task": "WORKMEM",
+      "human": null,
+      "reason": null,
+      "revision": null
+    },
+    {
+      "id": "98526286-a219-4b51-ad56-51766c2c20b9",
+      "at": "2026-10-26T16:15:25.698Z",
+      "action": "pause",
+      "task": "DOCS",
+      "human": null,
+      "reason": null,
+      "revision": null
+    },
+    {
+      "id": "20e50381-d9e5-4a52-9dcd-838efdedcd13",
+      "at": "2026-10-26T16:15:26.527Z",
+      "action": "resume",
+      "task": "UI",
       "human": null,
       "reason": null,
       "revision": null
@@ -2849,6 +2873,30 @@
       "cost": null,
       "stop_reason": null,
       "ended_at": "2026-10-26T15:58:10.316Z"
+    },
+    {
+      "id": "8f7f1ad1-b270-4ec9-808c-a740e430ea90",
+      "task": "UI",
+      "kind": "gate",
+      "command": ".venv/bin/python -m pytest tests/test_ui_trace.py -q",
+      "timeout": 120000,
+      "authorization": null,
+      "pid": 42339,
+      "child_pid": 42407,
+      "started_at": "2026-10-26T16:18:55.425Z",
+      "status": "passed",
+      "before_hash": "e6562ae8ee3ce584e982ebf3a543597cfbfae3719814313a9de6df8c40ca92e0",
+      "config_hash": "18fd3f3454881904c3a002dc0a888650c0d9cb5ea94324bf4221e08e6a2ba911",
+      "environment": {
+        "node": "v22.23.3",
+        "platform": "darwin",
+        "arch": "x64",
+        "verifier": "cbdddbf25e5ed5f3406b93881ae54f64d11a8c54f0bfe177d19d9d9946a6a971",
+        "variables": {}
+      },
+      "cost": null,
+      "stop_reason": null,
+      "ended_at": "2026-10-26T16:18:57.694Z"
     }
   ],
   "authorizations": [],

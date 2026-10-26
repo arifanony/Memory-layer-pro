@@ -115,3 +115,12 @@ class PgStore:
             " VALUES (%s, %s, %s, %s)",
             (user_id, event.memory_id, event.type, event.reason),
         )
+
+    @_wrap("forget_user")
+    def forget_user(self, user_id: str) -> dict:
+        """Delete one user's memories and events. Returns row counts."""
+        events = self.conn.execute(
+            "DELETE FROM memory_events WHERE user_id = %s", (user_id,)).rowcount
+        memories = self.conn.execute(
+            "DELETE FROM memories WHERE user_id = %s", (user_id,)).rowcount
+        return {"memories": memories, "events": events}

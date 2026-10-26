@@ -86,6 +86,22 @@ def test_record_event_persists_type_and_reason():
     assert "memory_events" in sql and params[2:] == ("REJECT", "dup")
 
 
+def test_forget_user_deletes_scoped_rows():
+    class CountingCur(FakeCur):
+        def __init__(self):
+            super().__init__()
+            self.rowcount = 2
+
+    conn = FakeConn()
+    conn.cur = CountingCur()
+    out = PgStore(conn).forget_user("u1")
+    sqls = [call[0] for call in conn.cur.calls]
+    assert any("DELETE FROM memory_events" in s for s in sqls)
+    assert any("DELETE FROM memories" in s for s in sqls)
+    assert all(call[1] == ("u1",) for call in conn.cur.calls)
+    assert out == {"memories": 2, "events": 2}
+
+
 def test_driver_errors_become_oserror():
     class BadConn:
         def execute(self, *a, **k):
