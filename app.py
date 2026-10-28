@@ -12,7 +12,7 @@ import time
 
 import streamlit as st
 
-from config import ConfigError, Settings, load, validate
+from config import ConfigError, Settings, active_model, load, validate
 from memory_store import PgStore, connect as pg_connect, init_schema
 from orchestrator import TurnResult, run_turn
 from schemas import MemoryEvent, StoredMemory
@@ -101,7 +101,7 @@ def main() -> None:
         st.header("Services")
         st.write("Postgres + pgvector: connected")
         st.write("Redis: connected")
-        st.write(f"Model: `{settings.nvidia_model or 'not set'}`")
+        st.write(f"Model: `{active_model(settings) or 'not set'}` ({settings.llm_provider})")
 
     history = st.session_state.setdefault("history", [])
     for turn in history:
@@ -126,6 +126,7 @@ def main() -> None:
             return
         detail = {
             "answer": result.answer,
+            "model": result.model,
             "memories": [memory_line(m) for m in result.memories],
             "decisions": list(result.decisions),
             "events": [event_line(e) for e in result.events],
@@ -150,6 +151,8 @@ def _render_detail(detail: dict) -> None:
         st.write(f"{len([s for s in steps if s[2] == 'done'])} of {len(steps)} steps done · "
                  f"persisted: {detail['persisted']} · working context saved: "
                  f"{detail['working_saved']} · turn took {detail['elapsed']}")
+        if detail.get("model"):
+            st.write(f"Answered by `{detail['model']}`")
         st.table([{"step": label, "status": status, "time": when}
                   for _, label, status, when, _ in steps])
         if detail["memories"]:

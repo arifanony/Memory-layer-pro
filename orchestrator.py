@@ -43,6 +43,7 @@ class TurnResult:
     answer: str
     persisted: bool
     working_saved: bool
+    model: str = ""
     memories: list[StoredMemory] = field(default_factory=list)
     decisions: list[str] = field(default_factory=list)
     events: list[MemoryEvent] = field(default_factory=list)
@@ -131,7 +132,8 @@ def run_turn(user_text: str, user_id: str, session_id: str, settings: Settings,
         step("model_call", "One hosted call", "failed", str(exc)[:200])
         return TurnResult(answer="The model response was unusable; nothing was stored.",
                           persisted=False, working_saved=False, trace=trace)
-    step("model_call", "One hosted call", "ok")
+    step("model_call", "One hosted call", "ok",
+         f"answered by {result.model}" if result.model else "")
 
     # Answer is user-facing: restore nothing (mapping holds no originals for
     # input the user typed), but screen it before use.
@@ -174,7 +176,7 @@ def run_turn(user_text: str, user_id: str, session_id: str, settings: Settings,
 
     step("trace", "Return answer and complete trace", "ok")
     return TurnResult(answer=result.answer, persisted=persisted_any,
-                      working_saved=working_saved, memories=memories,
+                      working_saved=working_saved, model=result.model, memories=memories,
                       decisions=[f"{d.type}: {d.reason}" for d in decisions],
                       events=decisions, trace=trace)
 

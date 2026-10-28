@@ -11,7 +11,7 @@ uv python install 3.13
 uv venv --python 3.13
 source .venv/bin/activate
 uv pip install -e ".[dev]"   # full stack (later tasks); scaffold needs pytest only
-cp .env.example .env          # then fill NVIDIA_API_KEY and NVIDIA_MODEL
+cp .env.example .env          # then fill NVIDIA_API_KEY + NVIDIA_MODEL (recommended direct chain) or OPENROUTER_API_KEY (Nemotron Ultra is the default model)
 python -m pytest tests/ -q
 ```
 
