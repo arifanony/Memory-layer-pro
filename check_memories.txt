@@ -1,0 +1,11 @@
+from config import load
+from memory_store import connect
+
+conn = connect(load())
+rows = conn.execute(
+    "SELECT LEFT(text, 60), category FROM memories"
+    " ORDER BY created_at DESC LIMIT 20"
+).fetchall()
+for row in rows:
+    print(list(row))
+conn.close()

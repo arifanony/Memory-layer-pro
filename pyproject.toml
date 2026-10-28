@@ -5,6 +5,9 @@ description = "Educational GPT-style memory application (Memory Lab MVP). Synthe
 requires-python = ">=3.11"
 dependencies = [
   "streamlit",
+  # pyarrow 26 requires NumPy 2, but Intel-mac torch pins numpy<2;
+  # keep pyarrow on the numpy-1-compatible line so st.table keeps working.
+  "pyarrow>=10.0.1,<21",
   "psycopg[binary]",
   "pgvector",
   "redis",

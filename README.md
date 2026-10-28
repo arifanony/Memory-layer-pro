@@ -24,9 +24,11 @@ packaging comes at the end (see ADR.md).
 - `orchestrator.py`: turn pipeline and trace.
 - `schemas.py`: validated response and memory contracts.
 - `config.py`: environment loading and startup validation.
+- `evaluation.py`: deterministic synthetic eval set (FR-12); run with `python evaluation.py`.
 - `tests/`: focused checks, mocks only, no live key required.
 
 ## Docs
 
 - [ADR.md](ADR.md): the brief this repo implements.
 - [SPEC.md](SPEC.md): requirements (FR/NFR/AC) and acceptance criteria.
+- [PIPELINE.md](PIPELINE.md): visual end-to-end Mermaid pipeline.

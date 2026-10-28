@@ -95,7 +95,8 @@ def run_turn(user_text: str, user_id: str, session_id: str, settings: Settings,
     step("screen_input", "PII/secret screen on input", "ok",
          f"{sum(masked.counts.values())} value(s) masked" if masked.counts else "clean")
     try:
-        context = [mask(turn).text for turn in working.read(session_id, limit=10)]
+        context = [mask(turn).text
+                   for turn in working.read(user_id, session_id, limit=10)]
     except (OSError, ValueError) as exc:
         return TurnResult(answer="Working memory is unavailable; try again.",
                           persisted=False, working_saved=False, trace=trace + [
@@ -143,8 +144,13 @@ def run_turn(user_text: str, user_id: str, session_id: str, settings: Settings,
     decisions: list[MemoryEvent] = []
     persisted_any = False
     for proposal in result.proposals:
-        decisions.append(_apply_proposal(proposal, user_id, query_vector,
-                                         store, settings, trace, masked))
+        try:
+            decisions.append(_apply_proposal(proposal, user_id, store, settings,
+                                             trace, masked, embed_fn))
+        except (OSError, ValueError) as exc:
+            trace.append(TraceStep(id="persist", label="Embed and persist proposal",
+                                   status="failed", detail=str(exc)[:200]))
+            continue
         persisted_any = persisted_any or decisions[-1].type in ("ADD", "SUPERSEDE")
     step("validate", "Parse, screen, apply policy", "ok",
          f"{len([d for d in decisions if d.type != 'REJECT'])} kept, "
@@ -157,8 +163,9 @@ def run_turn(user_text: str, user_id: str, session_id: str, settings: Settings,
         step("events", "Append memory events", "failed", str(exc))
 
     try:
-        working.append(session_id, f"user: {masked.text}")
-        working.append(session_id, f"assistant: {mask(result.answer).text}")
+        working.append(user_id, session_id, f"user: {masked.text}")
+        working.append(user_id, session_id,
+                       f"assistant: {mask(result.answer).text}")
         working_saved = True
         step("working", "Append turns per TTL", "ok")
     except (OSError, ValueError) as exc:
@@ -172,23 +179,27 @@ def run_turn(user_text: str, user_id: str, session_id: str, settings: Settings,
                       events=decisions, trace=trace)
 
 
-def _apply_proposal(proposal: Proposal, user_id: str, query_vector: list[float],
+def _apply_proposal(proposal: Proposal, user_id: str,
                     store: MemoryStore, settings: Settings,
-                    trace: list[TraceStep], masked: MaskResult) -> MemoryEvent:
+                    trace: list[TraceStep], masked: MaskResult,
+                    embed_fn=None) -> MemoryEvent:
     from embeddings import embed as embed_texts
 
     if contains_pii(proposal.text):
         return MemoryEvent(type="REJECT", reason="proposal contained PII/secret")
-    candidates = store.search(user_id, query_vector, settings.top_k)
+    # Duplicate/contradiction is about the proposal, so compare with the
+    # proposal's own embedding — the query vector answers a different question.
+    embed = embed_fn or (lambda text, cfg: embed_texts([text], cfg)[0])
+    proposal_vector = embed(proposal.text, settings)
+    candidates = store.search(user_id, proposal_vector, settings.top_k)
     for cand in candidates:
         if cand.text.strip() == proposal.text.strip():
             return MemoryEvent(type="REJECT", reason="duplicate of stored memory")
         if cand.category == proposal.category and cand.score >= SUPERSEDE_SIMILARITY:
-            vector = embed_texts([proposal.text], settings)[0]
-            new_mem = store.add(user_id, proposal.text, proposal.category, vector)
+            new_mem = store.add(user_id, proposal.text, proposal.category,
+                                proposal_vector)
             store.link_supersede(cand.id, new_mem.id)
             return MemoryEvent(type="SUPERSEDE", reason="contradicts stored memory",
                                memory_id=new_mem.id, supersedes=cand.id)
-    vector = embed_texts([proposal.text], settings)[0]
-    new_mem = store.add(user_id, proposal.text, proposal.category, vector)
+    new_mem = store.add(user_id, proposal.text, proposal.category, proposal_vector)
     return MemoryEvent(type="ADD", reason="accepted by policy", memory_id=new_mem.id)

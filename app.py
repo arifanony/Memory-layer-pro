@@ -61,7 +61,7 @@ def main() -> None:
 
     try:
         settings, store, working = _backend()
-    except (ConfigError, OSError) as exc:
+    except Exception as exc:
         st.error(f"Cannot start: {exc}")
         st.info("Copy .env.example to .env, fill the keys, and start services "
                 "with scripts/setup-services.sh. Then reload this page.")
@@ -79,16 +79,24 @@ def main() -> None:
         col_a, col_b = st.columns(2)
         with col_a:
             if st.button("Clear session"):
-                working.clear(session_id)
+                working.clear(user_id, session_id)
                 st.session_state.pop("history", None)
                 st.rerun()
         with col_b:
             forget = st.button("Forget user")
         if forget:
-            counts = store.forget_user(user_id)
-            st.session_state.pop("history", None)
-            st.success(f"Forgot {counts['memories']} memories, {counts['events']} events.")
-            st.rerun()
+            # Full user reset: durable memories and events plus every
+            # working session for this user. Clear session stays scoped
+            # to the active session only.
+            try:
+                counts = store.forget_user(user_id)
+                working.clear_user(user_id)
+            except OSError as exc:
+                st.error(f"Forget failed safely: {exc}. Demo state was not fully cleared.")
+            else:
+                st.session_state.pop("history", None)
+                st.success(f"Forgot {counts['memories']} memories, {counts['events']} events.")
+                st.rerun()
         st.divider()
         st.header("Services")
         st.write("Postgres + pgvector: connected")

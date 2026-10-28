@@ -49,16 +49,20 @@ class FakeWorking:
         self.turns = []
         self.fail = fail
 
-    def read(self, session_id, limit):
+    def read(self, user_id, session_id, limit):
         return self.turns[-limit:]
 
-    def append(self, session_id, turn):
+    def append(self, user_id, session_id, turn):
         if self.fail:
             raise OSError("redis down")
         self.turns.append(turn)
 
-    def clear(self, session_id):
+    def clear(self, user_id, session_id):
         self.turns.clear()
+
+    def clear_user(self, user_id):
+        self.turns.clear()
+        return 0
 
 
 def _llm(answer="done", proposals=()):
@@ -164,6 +168,43 @@ def test_working_failure_flagged():
                    llm_complete=llm, embed_fn=_embed)
     assert out.persisted and not out.working_saved
     assert any(s.id == "working" and s.status == "failed" for s in out.trace)
+
+
+def test_proposal_similarity_uses_proposal_embedding_not_query():
+    seen = []
+
+    class VecStore(FakeStore):
+        def search(self, user_id, vector, top_k):
+            seen.append(list(vector))
+            return [StoredMemory(id="m1", text="lives in Berlin",
+                                 category="fact", score=0.95)]
+
+    def text_embed(text, settings):
+        return [1.0 if "paris" in text.lower() else 0.0] * 384
+
+    llm = _llm("ok", [("lives in Paris", "fact")])
+    out = run_turn("moved house", "u1", "s1", _settings(), VecStore(),
+                   FakeWorking(), llm_complete=llm, embed_fn=text_embed)
+    # First search runs the query vector; the policy search must run the
+    # proposal's own vector, which is what triggers the SUPERSEDE here.
+    assert [1.0] * 384 in seen
+    assert out.events[0].type == "SUPERSEDE"
+
+
+def test_add_failure_still_answers_and_traces_exactly():
+    llm = _llm("here", [("likes tea", "preference")])
+    out = run_turn("hi", "u1", "s1", _settings(), FakeStore(fail_on=("add",)),
+                   FakeWorking(), llm_complete=llm, embed_fn=_embed)
+    assert out.answer == "here" and not out.persisted
+    assert any(s.id == "persist" and s.status == "failed" for s in out.trace)
+
+
+def test_events_failure_after_add_reports_what_succeeded():
+    llm = _llm("here", [("likes tea", "preference")])
+    out = run_turn("hi", "u1", "s1", _settings(), FakeStore(fail_on=("events",)),
+                   FakeWorking(), llm_complete=llm, embed_fn=_embed)
+    assert out.answer == "here" and out.persisted and out.working_saved
+    assert any(s.id == "events" and s.status == "failed" for s in out.trace)
 
 
 def test_build_prompt_redacted_and_toggleable():
