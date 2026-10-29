@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Memory Layer Pro — Teaching Demo Guide</title>
+<style>
+  body { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+         max-width: 860px; margin: 0 auto; padding: 24px; color: #1a1a1a;
+         line-height: 1.6; }
+  h1 { font-size: 28px; margin-bottom: 0; }
+  .sub { color: #555; margin-top: 4px; }
+  h2 { margin-top: 36px; border-bottom: 2px solid #eee; padding-bottom: 6px; }
+  .flow { background: #f6f8fa; border: 1px solid #ddd; border-radius: 8px;
+          padding: 16px; font-family: ui-monospace, monospace; font-size: 13px;
+          white-space: pre; overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+  th, td { border: 1px solid #ddd; padding: 8px 10px; text-align: left;
+           font-size: 14px; }
+  th { background: #f6f8fa; }
+  .tag { display: inline-block; padding: 1px 8px; border-radius: 10px;
+         font-size: 12px; font-weight: 600; }
+  .fact { background: #ddf4ff; } .pref { background: #ffe2e2; }
+  .proc { background: #e6f4ea; }
+  .step { background: #fff8e1; border-left: 4px solid #f0b429;
+          padding: 10px 14px; margin: 12px 0; }
+  code { background: #f6f8fa; padding: 1px 5px; border-radius: 4px;
+         font-size: 13px; }
+  .foot { color: #777; font-size: 13px; margin-top: 40px; }
+</style>
+</head>
+<body>
+<h1>Memory Layer Pro — Teaching Demo Guide</h1>
+<p class="sub">Synthetic data only. Nothing here is production-ready.</p>
+
+<h2>1. What this app already includes</h2>
+<table>
+<tr><th>Piece</th><th>What it does</th></tr>
+<tr><td>Streamlit chat UI</td><td>Chat, demo user/session controls, retrieval on/off, top-k slider, pipeline trace, clear/forget buttons</td></tr>
+<tr><td>Turn pipeline</td><td>12 stages from PII screen to trace; exactly one hosted model call per turn</td></tr>
+<tr><td>Postgres + pgvector</td><td>Durable memories per user: text, category, vector, timestamps, event log</td></tr>
+<tr><td>Redis</td><td>Working context: recent turns per user + session, bounded, expiring</td></tr>
+<tr><td>Local embeddings</td><td>Same model and preprocessing for queries and stored memories</td></tr>
+<tr><td>Deterministic policy</td><td>Python decides ADD / SUPERSEDE / REJECT with a visible reason — no second model call</td></tr>
+<tr><td>Evaluation set</td><td><code>python evaluation.py</code> reports hit@k, accepted/rejected, invalid, latency</td></tr>
+</table>
+
+<h2>2. How a turn works (point at the trace as you say this)</h2>
+<div class="flow">you type  →  PII screen (masked or clean?)
+         →  read recent Redis turns
+         →  embed query locally
+         →  retrieve top-k Postgres memories (scores shown)
+         →  build prompt (memories included — or zero if retrieval off)
+         →  ONE hosted call → answer + memory proposals
+         →  POLICY GATE per proposal: ADD / SUPERSEDE / REJECT + reason
+         →  save turns to Redis  →  answer + full trace</div>
+<p><b>The one line to land:</b> the model proposes, Python disposes. Retrieval only reads; nothing is stored unless the policy accepts it.</p>
+
+<h2>3. The synthetic memories (seeded via <code>scripts/seed_demo.py</code>)</h2>
+<table>
+<tr><th>Memory</th><th>Layer</th></tr>
+<tr><td>User prefers window seats when flying</td><td><span class="tag pref">preference</span></td></tr>
+<tr><td>User takes coffee black in the morning</td><td><span class="tag pref">preference</span></td></tr>
+<tr><td>User likes roast tea</td><td><span class="tag pref">preference</span></td></tr>
+<tr><td>PostgreSQL pgvector extension enables cosine similarity search</td><td><span class="tag fact">fact</span></td></tr>
+<tr><td>Redis lists with LTRIM keep only the newest N turns</td><td><span class="tag fact">fact</span></td></tr>
+<tr><td>Use list comprehensions instead of map/filter for readable transforms</td><td><span class="tag proc">procedure</span></td></tr>
+<tr><td>Use collections.Counter for efficient frequency counting</td><td><span class="tag proc">procedure</span></td></tr>
+</table>
+<h2>4. Live walkthrough (5 minutes)</h2>
+<div class="step"><b>Step 1 — a preference.</b> Ask <i>"What tea do I like?"</i>
+Point at retrieved <span class="tag pref">preference</span> "roast tea" with its
+similarity score, then at the policy row that accepted or rejected any proposal.</div>
+<div class="step"><b>Step 2 — retrieval is similarity, not understanding.</b> Ask
+<i>"What is Python?"</i> Show the weak scores (~0.4): with a tiny store, top-k
+returns the least-distant rows even when nothing is truly relevant.</div>
+<div class="step"><b>Step 3 — retrieval off.</b> Untick Retrieval, repeat the tea
+question. The prompt section shows zero durable memories — proof the path is excluded.</div>
+<div class="step"><b>Step 4 — Clear vs Forget.</b> Press <i>Clear session</i>: chat
+empties but roast tea still retrieves (durable ≠ working). Then <i>Forget user</i>:
+memories, events, and all working sessions for the user are gone.</div>
+<div class="step"><b>Step 5 — top-k.</b> Move the slider to 1 and back to 10 on the
+same question and compare which rows survive. Top-k is simply how many vectors Postgres returns.</div>
+
+<h2>5. Trace cheat sheet</h2>
+<table>
+<tr><th>Row</th><th>What to say</th></tr>
+<tr><td>PII screen</td><td>Values masked to [EMAIL_1]-style placeholders before anything else</td></tr>
+<tr><td>Working context</td><td>How many recent turns entered the prompt</td></tr>
+<tr><td>Retrieve</td><td>How many memories kept, with scores; weak ones are labeled weak</td></tr>
+<tr><td>Model call</td><td>Exactly one call; proposals listed beside the answer</td></tr>
+<tr><td>Validate</td><td>Per-proposal verdicts: kept vs rejected, each with a reason</td></tr>
+<tr><td>Events / working</td><td>What was durably logged vs what went to expiring Redis</td></tr>
+<tr><td>Failure detail</td><td>Redacted error: what failed, what was still shown, what was not saved</td></tr>
+</table>
+
+<p class="foot">Run <code>python scripts/seed_demo.py</code> to re-seed and print the live
+inventory. Run <code>python evaluation.py</code> for the deterministic scorecard.</p>
+</body>
+</html>

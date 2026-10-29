@@ -107,9 +107,12 @@ def build_request(messages: list[dict], settings: Settings,
     )
 
 
-def complete(messages: list[dict], settings: Settings, timeout: int = 60) -> ModelResult:
+def complete(messages: list[dict], settings: Settings,
+            timeout: int | None = None) -> ModelResult:
     """POST and parse strictly. Transport failures walk the fallback chain;
     malformed model output raises immediately and never triggers a retry."""
+    if timeout is None:
+        timeout = settings.llm_timeout_seconds
     models: list[str] = []
     for candidate in (active_model(settings), *settings.llm_fallback_models):
         if candidate and candidate not in models:
@@ -142,6 +145,12 @@ def _attempt(messages: list[dict], settings: Settings,
         content = payload["choices"][0]["message"]["content"]
     except (KeyError, IndexError, TypeError) as exc:
         raise LLMError(f"Unexpected response envelope: {exc}") from exc
+    if content is None:
+        # Reasoning models can spend the whole token budget thinking and
+        # return no message content (finish_reason "length"). Nothing usable
+        # was obtained, so this is a transport-class failure: the fallback
+        # chain gets a turn instead of failing the user's turn outright.
+        raise LLMTransportError("Model returned no content (empty message).")
     try:
         inner = json.loads(content)
     except (json.JSONDecodeError, TypeError) as exc:

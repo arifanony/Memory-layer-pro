@@ -61,6 +61,18 @@ def test_complete_posts_once_with_monkeypatched_http(monkeypatch):
     assert sent["temperature"] == 0 and sent["response_format"] == {"type": "json_object"}
 
 
+def test_complete_uses_settings_timeout_by_default(monkeypatch):
+    seen = []
+
+    def fake_urlopen(request, timeout=60):
+        seen.append(timeout)
+        return _http(_result("done"))
+
+    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
+    complete([{"role": "user", "content": "hi"}], _settings())
+    assert seen == [120]
+
+
 def test_complete_raises_on_transport_error(monkeypatch):
     def boom(request, timeout=60):
         raise urllib.error.URLError("down")

@@ -70,6 +70,40 @@ def test_complete_does_not_retry_on_malformed_output(monkeypatch):
     assert len(calls) == 1
 
 
+def test_null_content_retries_next_model(monkeypatch):
+    calls = []
+
+    def fake_urlopen(request, timeout=60):
+        calls.append(json.loads(request.data.decode())["model"])
+        if len(calls) == 1:
+            return io.BytesIO(json.dumps(
+                {"choices": [{"message": {"content": None},
+                              "finish_reason": "length"}]}).encode())
+        return _http(_ok_payload())
+
+    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
+    result = complete([{"role": "user", "content": "hi"}], _settings())
+    assert result.answer == "done"
+    assert result.model == "fallback-a"
+    assert calls == ["primary", "fallback-a"]
+
+
+def test_null_content_on_all_models_names_them(monkeypatch):
+    def fake_urlopen(request, timeout=60):
+        return io.BytesIO(json.dumps(
+            {"choices": [{"message": {"content": None},
+                          "finish_reason": "length"}]}).encode())
+
+    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
+    try:
+        complete([{"role": "user", "content": "hi"}], _settings())
+    except LLMError as exc:
+        message = str(exc)
+    else:
+        raise AssertionError("empty content on every model must raise")
+    assert "primary" in message and "fallback-a" in message
+
+
 def test_complete_failure_names_models_without_leaking_key(monkeypatch):
     def boom(request, timeout=60):
         raise urllib.error.URLError("down")

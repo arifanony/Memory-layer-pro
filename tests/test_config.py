@@ -32,6 +32,16 @@ def test_bad_int_rejected():
         load({"NVIDIA_API_KEY": "k", "NVIDIA_MODEL": "m", "TOP_K": "many"})
 
 
+def test_llm_timeout_defaults_and_validates():
+    assert validate(load({"NVIDIA_API_KEY": "k",
+                           "NVIDIA_MODEL": "m"})).llm_timeout_seconds == 120
+    assert validate(load({"NVIDIA_API_KEY": "k", "NVIDIA_MODEL": "m",
+                           "LLM_TIMEOUT_SECONDS": "30"})).llm_timeout_seconds == 30
+    with pytest.raises(ConfigError, match="LLM_TIMEOUT_SECONDS"):
+        validate(load({"NVIDIA_API_KEY": "k", "NVIDIA_MODEL": "m",
+                        "LLM_TIMEOUT_SECONDS": "0"}))
+
+
 def test_dotenv_reader_ignores_comments_and_empty(tmp_path):
     path = tmp_path / ".env"
     path.write_text('# comment\n\nnvidia_api_key = "abc"\nEMPTY=\n')

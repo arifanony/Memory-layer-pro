@@ -25,6 +25,9 @@ DEFAULT_REDIS_URL = "redis://localhost:6379/0"
 DEFAULT_EMBEDDING_MODEL = "BAAI/bge-small-en-v1.5"
 DEFAULT_TOP_K = 3
 DEFAULT_TTL_SECONDS = 3600
+# Hosted calls can stall on slow reasoning models; the fallback chain means
+# one turn can wait up to 2x this. Override with LLM_TIMEOUT_SECONDS.
+DEFAULT_LLM_TIMEOUT_SECONDS = 120
 
 
 class ConfigError(Exception):
@@ -81,6 +84,7 @@ class Settings:
     embedding_model: str = DEFAULT_EMBEDDING_MODEL
     top_k: int = DEFAULT_TOP_K
     redis_ttl_seconds: int = DEFAULT_TTL_SECONDS
+    llm_timeout_seconds: int = DEFAULT_LLM_TIMEOUT_SECONDS
 
 
 def active_api_key(settings: Settings) -> str:
@@ -156,6 +160,7 @@ def load(env: dict | None = None) -> Settings:
         embedding_model=_get(src, "EMBEDDING_MODEL", DEFAULT_EMBEDDING_MODEL),
         top_k=_int("TOP_K", DEFAULT_TOP_K),
         redis_ttl_seconds=_int("REDIS_TTL_SECONDS", DEFAULT_TTL_SECONDS),
+        llm_timeout_seconds=_int("LLM_TIMEOUT_SECONDS", DEFAULT_LLM_TIMEOUT_SECONDS),
     )
 
 
@@ -184,6 +189,9 @@ def validate(settings: Settings) -> Settings:
         problems.append(f"TOP_K must be >= 1, got {settings.top_k}.")
     if settings.redis_ttl_seconds < 1:
         problems.append(f"REDIS_TTL_SECONDS must be >= 1, got {settings.redis_ttl_seconds}.")
+    if settings.llm_timeout_seconds < 1:
+        problems.append(
+            f"LLM_TIMEOUT_SECONDS must be >= 1, got {settings.llm_timeout_seconds}.")
     for label, url in (("DATABASE_URL", settings.database_url), ("REDIS_URL", settings.redis_url)):
         if "://" not in url:
             problems.append(f"{label} looks invalid: {url!r}.")
